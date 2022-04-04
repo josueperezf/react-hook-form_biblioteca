@@ -1,6 +1,7 @@
 import { createTheme } from '@mui/material/styles';
 import { green, purple, blue, red } from '@mui/material/colors';
-
+import { esES } from '@mui/x-data-grid';
+import { esES as coreEsES } from '@mui/material/locale';
 declare module '@mui/material/Button' {
     interface ButtonPropsVariantOverrides {
       dashed: true;
@@ -43,4 +44,7 @@ export const theme = createTheme({
           ],
         },
       },
-});
+},
+esES,
+coreEsES
+);

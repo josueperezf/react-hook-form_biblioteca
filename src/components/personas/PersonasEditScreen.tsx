@@ -13,7 +13,7 @@ import { getPaises } from '../../store/thunk/paisThunk';
 import { Persona, Error400 } from '../../interfaces/index';
 import { formatRut } from '../../helpers/formatRut';
 import { subYears } from 'date-fns/esm';
-import { addPersona, getPersona } from '../../store/thunk/personaThunk';
+import { addPersona, getPersona, updatePersona } from '../../store/thunk/personaThunk';
 import { useNavigate, useParams } from 'react-router-dom';
 import { useSnackbar } from 'notistack';
 
@@ -43,28 +43,47 @@ const validationSchema =
 
 export const PersonasEditScreen = () => {
   const formMethods = useForm<Persona>({ mode: 'all', defaultValues, resolver: yupResolver(validationSchema) })
-  const { handleSubmit, setValue, setError, formState: { isValid, isDirty } } = formMethods;
+  const { handleSubmit, setValue, trigger, watch, setError, reset, formState: { isValid, errors } } = formMethods;
+  
   const { enqueueSnackbar } = useSnackbar();
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
   const params = useParams();
   const id = parseInt(params.id || '') ;
+  const {persona, cargando} = useAppSelector(state => state.personas);
 
-  useEffect(() => {    
-    if (id && (typeof id != "string")) {
-      dispatch(getPersona(id));
-    } else {
-      navigate('/personas');
+  useEffect(() => {
+    const cargarData = async () => {
+      if (id && (typeof id != "string")) {
+        try {
+          await dispatch(getPersona(id)).unwrap();
+        } catch (error) {
+          navigate('/personas');
+        }
+      } else {
+        navigate('/personas');
+      }
     }
+    cargarData();
   }, [id]);
 
-  const {persona, cargando} = useAppSelector(state => state.personas);
-  console.log(persona);
+  useEffect(() => {
+    const resetValues = async () => {
+      if (persona && Object.keys(persona).length > 0) {
+        reset(persona);
+        // la siguiente es para llamar a todas las validaciones, nota esto llama a las validaciones pero no hace un touched en los inputs
+        trigger();
+        setValue('dni', formatRut(persona.dni))
+      }
+    }
+    resetValues();
+  }, [persona])
   
 
-  const onSubmit = async (data: any) => {
+
+  const onSubmit = async (persona: Persona) => {
     try {
-      await dispatch(addPersona(data)).unwrap();
+      await dispatch(updatePersona(persona)).unwrap();
       enqueueSnackbar('Operacion Exitosa', {variant: 'success', anchorOrigin: { horizontal: 'center', vertical: 'top'}});
       navigate('/personas');
     } catch (error: any) {
@@ -88,59 +107,38 @@ export const PersonasEditScreen = () => {
     <Box >
       <Typography align='center' variant='h5' mb={2} >Editar Persona</Typography>
       <FormProvider {...formMethods} >
-        <form onSubmit={handleSubmit(onSubmit)}>
-          <Grid container spacing={3}>
-            <Grid item md={4} xs={12} >
-              <MyTextInput label={'Ingrese su DNI'} name={'dni'} placeholder='Ingrese su DNI' maxLength={12} onChange={ formatearInputRut } />
-            </Grid>
+        {
+          (persona && !cargando) && (
+            <form onSubmit={handleSubmit(onSubmit)}>
+              <Grid container spacing={3}>
+                <Grid item md={4} xs={12} >
+                  <MyTextInput label={'Ingrese su DNI'} name={'dni'} placeholder='Ingrese su DNI' maxLength={12} onChange={ formatearInputRut } />
+                </Grid>
 
-            <Grid item md={4} xs={12} >
-              <MyTextInput  label={'Ingrese Nombre'} mayuscula name={'nombre'} placeholder='Ingrese su nombre' maxLength={15}/>
-            </Grid>
+                <Grid item md={4} xs={12} >
+                  <MyTextInput  label={'Ingrese Nombre'} mayuscula name={'nombre'} placeholder='Ingrese su nombre' maxLength={15}/>
+                </Grid>
 
-            <Grid item md={4} xs={12} >
-              <MyTextInput  label={'Ingrese su telefono'} name={'telefono'} numero='entero' placeholder='Ingrese su telefono' maxLength={12} />
-            </Grid>
+                <Grid item md={4} xs={12} >
+                  <MyTextInput  label={'Ingrese su telefono'} name={'telefono'} numero='entero' placeholder='Ingrese su telefono' maxLength={12} />
+                </Grid>
 
-            {/* <Grid item md={4} xs={12} >
-              {
-                (!cargandoPaises && paises.length > 0) && (
-                  <FastField name="pais_id" placeholder="F">
-                  {({ field, form, meta }: {field:any, form:any, meta:any}) => (
-                    <TextField
-                      {...field}
-                      select
-                      label='Pais'
-                      fullWidth
-                      defaultValue={192}
-                    >
+                <Grid item md={4} xs={12} >
+                  <MyTextInput label={'Ingrese su direccion'} name={'direccion'} placeholder='Ingrese su direccion' maxLength={100} />
+                </Grid>
 
-                      {
-                        paises.map(({id, nombre}) => (
-                          <MenuItem value={id} key={id} >{nombre}</MenuItem>
-                        ))
-                      }
-                    </TextField>
-                    )}
-                  </FastField>
-                )
-              }
-            </Grid> */}
-    
-            <Grid item md={4} xs={12} >
-              <MyTextInput label={'Ingrese su direccion'} name={'direccion'} placeholder='Ingrese su direccion' maxLength={100} />
-            </Grid>
+                <Grid item md={4} xs={12} >
+                  <MyDatePicker name="fecha_nacimiento" label={'Fecha de Nacimiento'} maxDate={maxDate} minDate={minDate} />
+                </Grid>
+                
+              </Grid>
 
-            <Grid item md={4} xs={12} >
-              <MyDatePicker name="fecha_nacimiento" label={'Fecha de Nacimiento'} maxDate={maxDate} minDate={minDate} />
-            </Grid>
-            
-          </Grid>
-
-          <Box mt={3} textAlign='center'>
-            <Button type='submit' size='large'  variant="contained" disabled={!(isValid && isDirty)} >Guardar</Button> 
-          </Box>
-        </form>
+              <Box mt={3} textAlign='center'>
+                <Button type='submit' size='large'  variant="contained" disabled={!isValid || cargando} >Guardar</Button> 
+              </Box>
+            </form>
+          )
+        }
       </FormProvider>
     </Box>
   )

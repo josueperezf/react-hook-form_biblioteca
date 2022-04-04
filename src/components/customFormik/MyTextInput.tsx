@@ -38,9 +38,11 @@ export const MyTextInput = ({ label, maxLength, mayuscula, name, numero, replace
             {...props}
             value={value}
             inputRef={ref}
-            error={ (isTouched && error) && true }
             fullWidth
-            helperText={ (isTouched && error) ? error.message : null}
+            // helperText={ (isTouched && error) ? error.message : null}
+            helperText={ ( error) ? error.message : null}
+            // error={ (isTouched && error) && true }
+            error={ ( error) && true }
             label={(label) ? label : ''}
             variant={(variant)? variant : 'outlined'}
             inputProps={{

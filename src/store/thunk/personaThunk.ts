@@ -30,7 +30,6 @@ export const getPersona  = createAsyncThunk(
   }
 );
 
-
 export const addPersona  = createAsyncThunk(
   'personas/addPersona',
   async (persona: Persona, { rejectWithValue }) => {
@@ -42,6 +41,23 @@ export const addPersona  = createAsyncThunk(
       const respuesta = response.data;
       return respuesta;
       
+    } catch (error: any) {
+        return rejectWithValue(error);
+    }
+  }
+);
+
+export const updatePersona  = createAsyncThunk(
+  'personas/updatePersona',
+  async (persona: Persona, { rejectWithValue }) => {
+    if (persona.fecha_nacimiento) {
+      persona.fecha_nacimiento = format(new Date (persona.fecha_nacimiento), "yyyy-MM-dd" )
+    }
+    try {
+      const {id} = persona;
+      const response = await clienteAxios.put( `${url}personas/${id}`, persona);
+      const respuesta = response.data;
+      return respuesta;
     } catch (error: any) {
         return rejectWithValue(error);
     }

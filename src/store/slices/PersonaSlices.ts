@@ -1,16 +1,24 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { addPersona, getPersonas, getPersona } from '../thunk/personaThunk';
+import { addPersona, getPersonas, getPersona, updatePersona } from '../thunk/personaThunk';
 import { Persona } from '../../interfaces/index';
 
+interface PersonaState {
+  personas: Persona[],
+  persona?: Persona | null,
+  total: number,
+  cargando: boolean,
+  error?: any 
+}
+const initialState: PersonaState = {
+  personas: [],
+  persona: null,
+  total: 0,
+  cargando: false,
+  error: null
+}
 const PersonaSlice = createSlice({
   name: "personas",
-  initialState: {
-    personas: [],
-    persona: null,
-    total: 0,
-    cargando: false,
-    error: null
-  },
+  initialState,
   reducers: {
     // setPersonas: (state, action) => {
     //   state.list = action.payload;
@@ -24,6 +32,7 @@ const PersonaSlice = createSlice({
       })
       .addCase(getPersonas.fulfilled, (state, action) => {
         state.cargando = false;
+        state.persona = null;
         state.personas = action.payload.personas;
         state.total = action.payload.total;
       })
@@ -45,6 +54,7 @@ const PersonaSlice = createSlice({
         state.persona = action.payload.persona;
       })
       .addCase(getPersona.rejected, (state, action) => {
+        state.cargando = false;
         if (action.payload) {
           state.error = (action.payload as any) || '';
         } else {
@@ -59,15 +69,28 @@ const PersonaSlice = createSlice({
       })
       .addCase(addPersona.fulfilled, (state, action) => {
         state.cargando = false;
-        console.log(action);
-        
-        // state.personas = action.payload.personas;
-        // state.total = action.payload.total;
+        // console.log(action);
       })
       .addCase(addPersona.rejected, (state, action) => {
-        // console.log(action);
-        // console.log(action.payload);
-        
+        state.cargando = false;
+        if (action.payload) {
+          state.error = (action.payload as any) || null;
+        } else {
+          state.error = (action.error as any)
+        }
+      });
+
+      // updatePersona
+    builder
+      .addCase(updatePersona.pending, (state) => {
+        state.cargando = true;
+      })
+      .addCase(updatePersona.fulfilled, (state, action) => {
+        state.cargando = false;
+        console.log(action);
+      })
+      .addCase(updatePersona.rejected, (state, action) => {
+        state.cargando = false;
         if (action.payload) {
           state.error = (action.payload as any) || null;
         } else {
