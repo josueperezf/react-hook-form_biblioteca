@@ -6,7 +6,7 @@ import Box from '@mui/material/Box';
 import { Typography, Button, Grid } from '@mui/material';
 
 import { useAppDispatch, useAppSelector } from '../../hooks/useRedux';
-import { MyTextInput, MyDatePicker } from '../customFormik';
+import { MyTextInput, MyDatePicker } from '../customInputs';
 import { telefonoRegExp } from '../../helpers/expresionesRegulares';
 import { RutValidator } from '../../validators/rut.validator';
 import { getPaises } from '../../store/thunk/paisThunk';

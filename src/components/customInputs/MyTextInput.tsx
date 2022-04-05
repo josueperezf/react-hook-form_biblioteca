@@ -22,7 +22,7 @@ interface Props {
 
 }
 
-export const MyTextInput = ({ label, maxLength, mayuscula, name, numero, replaceAll, variant, onBlur, onChange: onChangeUser, onInput, ...props }: Props) => {
+export const MyTextInput = ({ label, maxLength, mayuscula, name, numero, replaceAll, type, variant, onBlur, onChange: onChangeUser, onInput, ...props }: Props) => {
     const { setValue } = useFormContext(); // retrieve all hook methods
     return (
       <Box mb={2} >
@@ -31,9 +31,10 @@ export const MyTextInput = ({ label, maxLength, mayuscula, name, numero, replace
           render={
             ({
               field: { onChange, onBlur, value, name, ref },
-              fieldState: { isTouched, error },
+              fieldState: { error },
             }) =>
           <TextField
+            type={(type) ?? type}
             name={name}
             {...props}
             value={value}

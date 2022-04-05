@@ -19,6 +19,14 @@ export const DrawerComponent = () => {
                     <ListItemText primary='Persona' />
             </ListItem>
         </NavLink>
+        <NavLink className={''} style={{textDecoration: 'none'}} to={'/autores'} >
+            <ListItem button   >
+                <ListItemIcon>
+                    <People />
+                </ListItemIcon>
+                    <ListItemText primary='Autor' />
+            </ListItem>
+        </NavLink>
       </List>
   )
 }

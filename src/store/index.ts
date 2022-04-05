@@ -1,11 +1,13 @@
 import { configureStore } from '@reduxjs/toolkit'
+import AutorSlices from './slices/AutorSlices';
 import PaisSlice from './slices/PaisSlices';
 import PersonaSlice from './slices/PersonaSlices';
 
 export const store = configureStore({
   reducer: {
-    personas: PersonaSlice,
+    autores: AutorSlices,
     paises: PaisSlice,
+    personas: PersonaSlice,
     // comments: commentsReducer,
     // users: usersReducer
   }
