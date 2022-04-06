@@ -26,7 +26,7 @@ const minDate = subYears( new Date(), 800);
 
 const validationSchema =
   Yup.object({
-    nombre: Yup.string().trim().min(3, 'debe contener al menos 3 caracteres').max(15, 'Debe tener 15 caracteres o menos').required('Requerido'),
+    nombre: Yup.string().trim().min(3, 'debe contener al menos 3 caracteres').max(50, 'Debe tener 50 caracteres o menos').required('Requerido'),
     fecha_nacimiento : Yup.date().typeError("Fecha no Valida").max(maxDate, "fecha minima no permitida").min(minDate, "fecha maxima no permitida").required('Requerido'),
     pais_id:  Yup.number().required('Requerido').notOneOf([0], 'Algun elemento debe ser seleccionado'),
     biografia : Yup.string().trim().min(6, 'debe contener al menos 6 caracteres').max(250, 'Debe tener 250 caracteres o menos').required('Requerido'),
@@ -74,7 +74,7 @@ export const AutoresAddScreen = () => {
           <Grid container spacing={3}>
 
             <Grid item md={4} xs={12} >
-              <MyTextInput  label={'Ingrese Nombre'} mayuscula name={'nombre'} placeholder='Ingrese su nombre' maxLength={15}/>
+              <MyTextInput  label={'Ingrese Nombre'} mayuscula name={'nombre'} placeholder='Ingrese su nombre' maxLength={50}/>
             </Grid>
             <Grid item md={4} xs={12} >
               <MyDatePicker name="fecha_nacimiento" label={'Fecha de Nacimiento'} maxDate={maxDate} minDate={minDate} />
