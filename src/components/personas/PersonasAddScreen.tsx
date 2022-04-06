@@ -5,7 +5,7 @@ import * as Yup from 'yup';
 import Box from '@mui/material/Box';
 import { Typography, Button, Grid } from '@mui/material';
 
-import { useAppDispatch, useAppSelector } from '../../hooks/useRedux';
+import { useAppDispatch } from '../../hooks/useRedux';
 import { MyTextInput, MyDatePicker } from '../customInputs';
 import { telefonoRegExp } from '../../helpers/expresionesRegulares';
 import { RutValidator } from '../../validators/rut.validator';
@@ -34,9 +34,8 @@ const validationSchema =
     .test('ValidarRut', 'Debe ser Rut valido',
       value =>  RutValidator(value ||  '' )
     ),
-    nombre: Yup.string().trim().min(3, 'debe contener al menos 3 caracteres').max(15, 'Debe tener 15 caracteres o menos').required('Requerido'),
+    nombre: Yup.string().trim().min(3, 'debe contener al menos 3 caracteres').max(50, 'Debe tener 50 caracteres o menos').required('Requerido'),
     telefono: Yup.string().trim().matches(telefonoRegExp, 'Debe ser un numero valido').required('Requerido'),
-    // pais_id:  Yup.number().required('Requerido'),
     direccion : Yup.string().trim().min(6, 'debe contener al menos 6 caracteres').max(100, 'Debe tener 100 caracteres o menos').required('Requerido'),
     fecha_nacimiento : Yup.date().typeError("Fecha no Valida").max(maxDate, "fecha minima no permitida").min(minDate, "fecha maxima no permitida").required('Requerido')
 });
@@ -47,11 +46,10 @@ export const PersonasAddScreen = () => {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
   const { enqueueSnackbar } = useSnackbar();
+
   useEffect(() => {
     dispatch(getPaises());
   }, [dispatch]);
-
-  const {paises, cargando: cargandoPaises} = useAppSelector(state => state.paises);
 
   const onSubmit = async (data: any) => {
     try {
@@ -86,37 +84,12 @@ export const PersonasAddScreen = () => {
             </Grid>
 
             <Grid item md={4} xs={12} >
-              <MyTextInput  label={'Ingrese Nombre'} mayuscula name={'nombre'} placeholder='Ingrese su nombre' maxLength={15}/>
+              <MyTextInput  label={'Ingrese Nombre'} mayuscula name={'nombre'} placeholder='Ingrese su nombre' maxLength={50}/>
             </Grid>
 
             <Grid item md={4} xs={12} >
               <MyTextInput  label={'Ingrese su telefono'} name={'telefono'} numero='entero' placeholder='Ingrese su telefono' maxLength={12} />
             </Grid>
-
-            {/* <Grid item md={4} xs={12} >
-              {
-                (!cargandoPaises && paises.length > 0) && (
-                  <FastField name="pais_id" placeholder="F">
-                  {({ field, form, meta }: {field:any, form:any, meta:any}) => (
-                    <TextField
-                      {...field}
-                      select
-                      label='Pais'
-                      fullWidth
-                      defaultValue={192}
-                    >
-
-                      {
-                        paises.map(({id, nombre}) => (
-                          <MenuItem value={id} key={id} >{nombre}</MenuItem>
-                        ))
-                      }
-                    </TextField>
-                    )}
-                  </FastField>
-                )
-              }
-            </Grid> */}
     
             <Grid item md={4} xs={12} >
               <MyTextInput label={'Ingrese su direccion'} name={'direccion'} placeholder='Ingrese su direccion' maxLength={100} />

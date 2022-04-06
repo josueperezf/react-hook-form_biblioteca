@@ -9,11 +9,10 @@ import { useAppDispatch, useAppSelector } from '../../hooks/useRedux';
 import { MyTextInput, MyDatePicker } from '../customInputs';
 import { telefonoRegExp } from '../../helpers/expresionesRegulares';
 import { RutValidator } from '../../validators/rut.validator';
-import { getPaises } from '../../store/thunk/paisThunk';
 import { Persona, Error400 } from '../../interfaces/index';
 import { formatRut } from '../../helpers/formatRut';
 import { subYears } from 'date-fns/esm';
-import { addPersona, getPersona, updatePersona } from '../../store/thunk/personaThunk';
+import { getPersona, updatePersona } from '../../store/thunk/personaThunk';
 import { useNavigate, useParams } from 'react-router-dom';
 import { useSnackbar } from 'notistack';
 
@@ -34,16 +33,15 @@ const validationSchema =
     .test('ValidarRut', 'Debe ser Rut valido',
       value =>  RutValidator(value ||  '' )
     ),
-    nombre: Yup.string().trim().min(3, 'debe contener al menos 3 caracteres').max(15, 'Debe tener 15 caracteres o menos').required('Requerido'),
+    nombre: Yup.string().trim().min(3, 'debe contener al menos 3 caracteres').max(50, 'Debe tener 50 caracteres o menos').required('Requerido'),
     telefono: Yup.string().trim().matches(telefonoRegExp, 'Debe ser un numero valido').required('Requerido'),
-    // pais_id:  Yup.number().required('Requerido'),
     direccion : Yup.string().trim().min(6, 'debe contener al menos 6 caracteres').max(100, 'Debe tener 100 caracteres o menos').required('Requerido'),
     fecha_nacimiento : Yup.date().typeError("Fecha no Valida").max(maxDate, "fecha minima no permitida").min(minDate, "fecha maxima no permitida").required('Requerido')
 });
 
 export const PersonasEditScreen = () => {
   const formMethods = useForm<Persona>({ mode: 'all', defaultValues, resolver: yupResolver(validationSchema) })
-  const { handleSubmit, setValue, trigger, watch, setError, reset, formState: { isValid, errors } } = formMethods;
+  const { handleSubmit, setValue, trigger, setError, reset, formState: { isValid } } = formMethods;
   
   const { enqueueSnackbar } = useSnackbar();
   const dispatch = useAppDispatch();
@@ -108,7 +106,7 @@ export const PersonasEditScreen = () => {
       <Typography align='center' variant='h5' mb={2} >Editar Persona</Typography>
       <FormProvider {...formMethods} >
         {
-          (persona && !cargando) && (
+          (persona && Object.keys(persona).length > 0 && !cargando) && (
             <form onSubmit={handleSubmit(onSubmit)}>
               <Grid container spacing={3}>
                 <Grid item md={4} xs={12} >
@@ -116,7 +114,7 @@ export const PersonasEditScreen = () => {
                 </Grid>
 
                 <Grid item md={4} xs={12} >
-                  <MyTextInput  label={'Ingrese Nombre'} mayuscula name={'nombre'} placeholder='Ingrese su nombre' maxLength={15}/>
+                  <MyTextInput  label={'Ingrese Nombre'} mayuscula name={'nombre'} placeholder='Ingrese su nombre' maxLength={50}/>
                 </Grid>
 
                 <Grid item md={4} xs={12} >
