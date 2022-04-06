@@ -4,6 +4,8 @@ import ListItem from '@mui/material/ListItem';
 import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
 import People from '@mui/icons-material/People';
+import AssignmentIndIcon from '@mui/icons-material/AssignmentInd';
+import MenuBookIcon from '@mui/icons-material/MenuBook';
 import { NavLink } from 'react-router-dom';
 
 
@@ -16,15 +18,23 @@ export const DrawerComponent = () => {
                 <ListItemIcon>
                     <People />
                 </ListItemIcon>
-                    <ListItemText primary='Persona' />
+                    <ListItemText primary='Personas' />
             </ListItem>
         </NavLink>
         <NavLink className={''} style={{textDecoration: 'none'}} to={'/autores'} >
             <ListItem button   >
                 <ListItemIcon>
-                    <People />
+                    <AssignmentIndIcon />
                 </ListItemIcon>
-                    <ListItemText primary='Autor' />
+                    <ListItemText primary='Autores' />
+            </ListItem>
+        </NavLink>
+        <NavLink className={''} style={{textDecoration: 'none'}} to={'/libros'} >
+            <ListItem button   >
+                <ListItemIcon>
+                    <MenuBookIcon />
+                </ListItemIcon>
+                    <ListItemText primary='Libros' />
             </ListItem>
         </NavLink>
       </List>

@@ -27,7 +27,10 @@ export const PrivateRouter = () => {
           <Route path="edit/:id" element={<Accesos roles={['admin']} component={AutoresEditScreen }/>}/>
         </Route>
 
-        <Route path="/libros" element={<Accesos roles={['admin']} component={LibrosScreen} />}/>
+        <Route path='libros'>
+          <Route index  element={<Accesos roles={['admin']} component={LibrosScreen }/>}/>
+        </Route>
+
           {/* <Route path="/*" element={<Navigate to='libros' replace /> } /> */}
       </Routes>
     </DashboardTemplate>
