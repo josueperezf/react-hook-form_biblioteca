@@ -27,6 +27,17 @@ export const getLibro  = createAsyncThunk(
   }
 );
 
+export const getLibroForEdit  = createAsyncThunk(
+  'libros/getLibroForEdit',
+  async (id: number) => {
+    const response = await clienteAxios.get( `${url}libros/edit/${id}`);
+    const respuesta = response.data;
+    console.log(respuesta);
+    
+    return respuesta;
+  }
+);
+
 export const addLibro  = createAsyncThunk(
   'libros/addLibro',
   async (libro: Libro, { rejectWithValue }) => {

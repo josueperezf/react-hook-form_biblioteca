@@ -1,6 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { Libro } from '../../interfaces/index';
-import { getLibros, getLibro, updateLibro, addLibro } from '../thunk/libroThunk';
+import { getLibros, getLibro, updateLibro, addLibro, getLibroForEdit } from '../thunk/libroThunk';
 
 interface PersonaState {
   libros: Libro[],
@@ -31,7 +31,6 @@ const LibroSlice = createSlice({
     builder
       .addCase(getLibros.pending, (state) => {
         state.cargando = true;
-        state.cargandoEnDialog = false;
       })
       .addCase(getLibros.fulfilled, (state, action) => {
         state.cargando = false;
@@ -64,7 +63,24 @@ const LibroSlice = createSlice({
           state.error = (action.error as any)
         }
       });
-
+    // getLibroForEdit
+    builder
+      .addCase(getLibroForEdit.pending, (state) => {
+        state.cargandoEnDialog = true;
+        state.libro = null;
+      })
+      .addCase(getLibroForEdit.fulfilled, (state, action) => {
+        state.cargandoEnDialog = false;
+        state.libro = action.payload.libro;
+      })
+      .addCase(getLibroForEdit.rejected, (state, action) => {
+        state.cargandoEnDialog = false;
+        if (action.payload) {
+          state.error = (action.payload as any) || '';
+        } else {
+          state.error = (action.error as any)
+        }
+      });
     // addLibro
     builder
       .addCase(addLibro.pending, (state) => {
@@ -86,14 +102,14 @@ const LibroSlice = createSlice({
       // updateLibro
     builder
       .addCase(updateLibro.pending, (state) => {
-        state.cargando = true;
+        state.cargandoEnDialog = true;
       })
       .addCase(updateLibro.fulfilled, (state, action) => {
-        state.cargando = false;
+        state.cargandoEnDialog = false;
         console.log(action);
       })
       .addCase(updateLibro.rejected, (state, action) => {
-        state.cargando = false;
+        state.cargandoEnDialog = false;
         if (action.payload) {
           state.error = (action.payload as any) || null;
         } else {
