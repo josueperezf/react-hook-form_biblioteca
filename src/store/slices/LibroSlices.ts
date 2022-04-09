@@ -7,6 +7,7 @@ interface PersonaState {
   libro?: Libro | null,
   total: number,
   cargando: boolean,
+  cargandoEnDialog: boolean,
   error?: any 
 }
 const initialState: PersonaState = {
@@ -14,6 +15,7 @@ const initialState: PersonaState = {
   libro: null,
   total: 0,
   cargando: false,
+  cargandoEnDialog: false,
   error: null
 }
 const LibroSlice = createSlice({
@@ -29,6 +31,7 @@ const LibroSlice = createSlice({
     builder
       .addCase(getLibros.pending, (state) => {
         state.cargando = true;
+        state.cargandoEnDialog = false;
       })
       .addCase(getLibros.fulfilled, (state, action) => {
         state.cargando = false;
@@ -65,14 +68,14 @@ const LibroSlice = createSlice({
     // addLibro
     builder
       .addCase(addLibro.pending, (state) => {
-        state.cargando = true;
+        state.cargandoEnDialog = true;
       })
       .addCase(addLibro.fulfilled, (state, action) => {
-        state.cargando = false;
+        state.cargandoEnDialog = false;
         // console.log(action);
       })
       .addCase(addLibro.rejected, (state, action) => {
-        state.cargando = false;
+        state.cargandoEnDialog = false;
         if (action.payload) {
           state.error = (action.payload as any) || null;
         } else {

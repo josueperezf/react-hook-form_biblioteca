@@ -29,7 +29,8 @@ export interface Pais {
     estatus?: number,
 }
 export interface Libro {
-    id: number,
+    id?: number,
     titulo: string,
     estatus?: number,
+    autores?: any
 }

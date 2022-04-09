@@ -25,7 +25,7 @@ function customToolbar() {
 export const LibrosList = () => {
   const {libros} = useAppSelector(state => state.libros);
   
-  const [pageSize, setPageSize] = useState<number>(5);
+  const [pageSize, setPageSize] = useState<number>(10);
   const navigate = useNavigate();
 
   const columns: GridColDef[] = [
@@ -68,7 +68,7 @@ export const LibrosList = () => {
   ];
   return (
     <>
-      <div style={{height: 400, width: '100%' }}>
+      <div style={{height: 600, width: '100%' }}>
         <DataGrid
           disableSelectionOnClick
           hideFooterSelectedRowCount
@@ -77,7 +77,7 @@ export const LibrosList = () => {
           pagination
           pageSize={pageSize}
           onPageSizeChange={(newPageSize) => setPageSize(newPageSize)}
-          rowsPerPageOptions={[5, 10, 20]}
+          rowsPerPageOptions={[5, 10, 20, 50]}
           components={{
             Toolbar: customToolbar
           }}
