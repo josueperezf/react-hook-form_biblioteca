@@ -37,6 +37,14 @@ export const DrawerComponent = () => {
                     <ListItemText primary='Libros' />
             </ListItem>
         </NavLink>
+        <NavLink className={''} style={{textDecoration: 'none'}} to={'/ediciones'} >
+            <ListItem button   >
+                <ListItemIcon>
+                    <MenuBookIcon />
+                </ListItemIcon>
+                    <ListItemText primary='Ediciones' />
+            </ListItem>
+        </NavLink>
       </List>
   )
 }
