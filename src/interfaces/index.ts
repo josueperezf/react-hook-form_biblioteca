@@ -28,9 +28,27 @@ export interface Pais {
     nombre: string,
     estatus?: number,
 }
+export interface Idioma {
+    id: number,
+    nombre: string,
+    estatus?: number,
+}
 export interface Libro {
     id?: number,
     titulo: string,
     estatus?: number,
     autores?: any
+}
+
+export interface Edicion  {
+    id?: number,
+    idioma_id: number,
+    libro_id: number | null,
+    nombre: string,
+    fecha: Date | string | null,
+    isbn: string,
+    numero_paginas: number,
+    tipo?: number | null,
+    estatus?: number,
+    [x: string]: any
 }

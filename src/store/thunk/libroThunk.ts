@@ -27,6 +27,16 @@ export const getLibro  = createAsyncThunk(
   }
 );
 
+export const getLibroPorAutor  = createAsyncThunk(
+  'libros/getLibroPorAutor',
+  async (id: number) => {
+    // id es el id del autor del que queremos sus libros
+    const response = await clienteAxios.get( `${url}libros/por-autor/${id}`);
+    const respuesta = response.data;
+    return respuesta;
+  }
+);
+
 export const getLibroForEdit  = createAsyncThunk(
   'libros/getLibroForEdit',
   async (id: number) => {

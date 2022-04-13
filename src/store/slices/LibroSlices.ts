@@ -1,6 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { Libro } from '../../interfaces/index';
-import { getLibros, getLibro, updateLibro, addLibro, getLibroForEdit } from '../thunk/libroThunk';
+import { getLibros, getLibro, updateLibro, addLibro, getLibroForEdit, getLibroPorAutor } from '../thunk/libroThunk';
 
 interface PersonaState {
   libros: Libro[],
@@ -22,9 +22,9 @@ const LibroSlice = createSlice({
   name: "libros",
   initialState,
   reducers: {
-    // setPersonas: (state, action) => {
-    //   state.list = action.payload;
-    // }
+    setLibros: (state, action) => {
+      state.libros = action.payload || [];
+    }
   },
   extraReducers: (builder) => {
     // getLibros
@@ -63,6 +63,27 @@ const LibroSlice = createSlice({
           state.error = (action.error as any)
         }
       });
+
+    //getLibroPorAutor 
+    builder
+      .addCase(getLibroPorAutor.pending, (state) => {
+        state.cargando = true;
+        state.libros = [];
+      })
+      .addCase(getLibroPorAutor.fulfilled, (state, action) => {
+        state.cargando = false;
+        console.log(action.payload);
+        state.libros = action.payload.libros;
+      })
+      .addCase(getLibroPorAutor.rejected, (state, action) => {
+        state.cargando = false;
+        if (action.payload) {
+          state.error = (action.payload as any) || '';
+        } else {
+          state.error = (action.error as any)
+        }
+      });
+
     // getLibroForEdit
     builder
       .addCase(getLibroForEdit.pending, (state) => {
@@ -120,4 +141,5 @@ const LibroSlice = createSlice({
   },
 });
 
+export const { setLibros } = LibroSlice.actions;
 export default LibroSlice.reducer;
