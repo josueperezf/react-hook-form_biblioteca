@@ -34,7 +34,7 @@ export const EdicionesList = () => {
     { field: 'idioma', headerName: 'Idioma', editable: false, valueFormatter: (data : any) => data.value.nombre },
     { field: 'libro', headerName: 'Libro', minWidth: 200, editable: false, valueFormatter: (data : any) => data.value.titulo },
     { field: 'nombre', headerName: 'Nombre', minWidth: 200, editable: false, flex: 1 },
-    { field: 'fecha', headerName: 'Fecha', minWidth: 100, flex: 1, valueFormatter: (data : any) =>  format(new Date (data.value), "dd-MM-yyyy" ) },
+    { field: 'fecha', headerName: 'Fecha', width: 80, flex: 1, valueFormatter: (data : any) =>  format(new Date (data.value), "dd-MM-yyyy" ) },
     // { field: 'pais', headerName: 'Pais', disableColumnMenu: true, valueFormatter: ({value}: any) =>  (value.nombre as string).toLocaleUpperCase()  },
     { field: 'print', headerName: 'Acciones', disableExport: true, width: 150, flex: 1, sortable: false, filterable: false, disableColumnMenu: true,
     renderCell: (cellValues) => {
@@ -61,7 +61,7 @@ export const EdicionesList = () => {
               size='small'
               startIcon={<EditIcon fontSize='small' />}
               onClick={() => {
-                navigate(`/autores/edit/${cellValues.id}`);
+                navigate(`/ediciones/edit/${cellValues.id}`);
               }}
             >
               Editar

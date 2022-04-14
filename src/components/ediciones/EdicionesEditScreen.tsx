@@ -1,5 +1,5 @@
-import { useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useEffect, useState, useLayoutEffect } from 'react';
+import { useNavigate, useParams } from 'react-router-dom';
 import { FormProvider, useForm } from "react-hook-form";
 import { useSnackbar } from 'notistack';
 import { yupResolver } from '@hookform/resolvers/yup';
@@ -10,7 +10,7 @@ import { Error400, Edicion, Idioma, Autor, Libro } from '../../interfaces/index'
 import Box from '@mui/material/Box';
 import { Typography, Grid, Button } from '@mui/material';
 import { getIdiomas } from '../../store/thunk/idiomasThunk';
-import { addEdicion } from '../../store/thunk/edicionThunk';
+import { addEdicion, getEdicion, updateEdicion } from '../../store/thunk/edicionThunk';
 import { getAutores } from '../../store/thunk/autorThunk';
 import { getLibroPorAutor } from '../../store/thunk/libroThunk';
 import { setLibros } from '../../store/slices/LibroSlices';
@@ -40,24 +40,56 @@ const validationSchema =
     numero_paginas:  Yup.number().typeError('Requerido').required('Requerido').min(1, 'debe contener al menos pagina').max(9999,'excede el numero maximo de paginas permitido')
 });
 
-export const EdicionesAddScreen = () => {
+const initialSelect = {id: 0, text: 'SELECCIONE'};
+
+export const EdicionesEditScreen = () => {
   const formMethods = useForm<Edicion>({ mode: 'all', defaultValues, resolver: yupResolver(validationSchema) })
-  const { handleSubmit, setError, setValue, formState: { isValid, isDirty } } = formMethods;
+  const { handleSubmit, setError, setValue, getValues, reset, formState: { isValid, isDirty } } = formMethods;
   const [idiomaFormateado, setIdiomaFormateado] = useState<{id: number | string, text: string}[]>([]);
   const [autoresFormateado, setAutoresFormateado] = useState<{id: number | string, text: string}[]>([]);
   const [librosFormateado, setLibrosFormateado] = useState<{id: number | string, text: string}[]>([]);
   const {idiomas} = useAppSelector(state => state.idiomas);
   const {autores} = useAppSelector(state => state.autores);
+  const {edicion, cargando: cargandoEdicion} = useAppSelector(state => state.ediciones);
   const {libros, cargando: cargandoLibros} = useAppSelector(state => state.libros);
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
   const { enqueueSnackbar } = useSnackbar();
-
+  const params = useParams();
+  const id = parseInt(params.id || '') ;
+  
   useEffect(() => {
     (idiomas.length === 0) && dispatch(getIdiomas());
-    dispatch(getAutores());
-    dispatch(setLibros([]));
+    const cargarData = async () => {
+      if (id && (typeof id != "string")) {
+        try {
+          await Promise.all([
+            dispatch(getEdicion(id)),
+            dispatch(getAutores()),
+            dispatch(setLibros([]))
+          ]);
+        } catch (error) {
+          navigate('/ediciones')
+        }
+      } else {
+        navigate('/ediciones')
+      }
+    }
+    cargarData();
   }, [dispatch]);
+
+  useEffect(() => {
+    if (edicion) {
+      const {idioma = initialSelect, libro = {...initialSelect, titulo: ''}, ...data} = {...edicion};
+      if(Object.keys(libro).length > 0) {
+        const dataFormateada = {id: libro.id, text: libro.titulo  }
+        // setLibrosFormateado([dataFormateada]);
+      }
+      dispatch(getLibroPorAutor(edicion.autor_id));
+      reset(data);
+      }
+  }, [edicion])
+  
 
   useEffect(() => {
     if (idiomas.length > 0) {
@@ -68,12 +100,18 @@ export const EdicionesAddScreen = () => {
 
   useEffect(() => {
     const dataFormateada = autores.map(({id, nombre}: Autor) => ({id: id || 0, text: nombre}));
-    setAutoresFormateado([ {id: 0, text: 'SELECCIONE'}, ...dataFormateada]);
+    setAutoresFormateado([ initialSelect, ...dataFormateada]);
   }, [autores]);
 
-  useEffect(() => {
-    const dataFormateada = libros.map(({id, titulo}: Libro) => ({id: id || 0, text: titulo}));
-    setLibrosFormateado([ {id: 0, text: 'SELECCIONE'}, ...dataFormateada]);
+  useLayoutEffect(() => {
+    if (edicion) {
+      const libro_id = getValues('libro_id');
+      const dataFormateada = [initialSelect, ...libros.map(({id, titulo}: Libro) => ({id: id || 0, text: titulo}))];
+      const encontrado = dataFormateada.find((l) => l.id === libro_id);
+      if ( encontrado && Object.keys(encontrado).length > 0) {
+        setLibrosFormateado(dataFormateada)
+      }
+    }
   }, [libros]);
 
   const onChangeAutor = (e: any) => {
@@ -81,16 +119,10 @@ export const EdicionesAddScreen = () => {
     const autor_id = e.target.value;
     dispatch(getLibroPorAutor(autor_id));
   }
+
   const onSubmit = async (edicion: Edicion) => {
-    const data = {... edicion};
-    /**
-     * en base de datos no debe estar autor_id, ya que tengo libro_id, pero como un libro esta relacion a varios autores, 
-     * entonces se creo el campo autor_id en base de datos para que al editar, se pueda listar el libros,
-     * los relacionados al autor que selecciono el usuario al momento de la creacion o insert
-     */
-    // delete data.autor_id;
     try {
-      await dispatch(addEdicion(data)).unwrap();
+      await dispatch(updateEdicion(edicion)).unwrap();
       enqueueSnackbar('Operacion Exitosa', {variant: 'success', anchorOrigin: { horizontal: 'center', vertical: 'top'}});
       navigate('/ediciones');
     } catch (error: any) {
@@ -109,43 +141,46 @@ export const EdicionesAddScreen = () => {
   
   return (
     <Box>
-      <Typography align='center' variant='h5' mb={4} >Agregar Edicion a un libro</Typography>
-      <FormProvider {...formMethods}>
-        <form onSubmit={handleSubmit(onSubmit)} >
-          <Grid container spacing={3}>
+      <Typography align='center' variant='h5' mb={4} >Editar Edicion a un libro</Typography>
+      {
+        (!cargandoEdicion && edicion && Object.keys(edicion).length > 0 ) &&
+          (<FormProvider {...formMethods}>
+            <form onSubmit={handleSubmit(onSubmit)} >
+              <Grid container spacing={3}>
 
-            <Grid item md={4} xs={12} >
-              { (idiomaFormateado.length > 0)  && <MySelect label={'Idioma'} name={'idioma_id'} options={idiomaFormateado} /> }
-            </Grid>
-            <Grid item md={4} xs={12} >
-              {(autoresFormateado.length > 0)  && <MySelect label={'Autor'} name={'autor_id'} options={autoresFormateado} onChange={onChangeAutor} />}
-            </Grid>
-            <Grid item md={4} xs={12} >
-              {(librosFormateado.length > 0)  && <MySelect label={'Libro'} name={'libro_id'} options={librosFormateado} />}
-            </Grid>
+                <Grid item md={4} xs={12} >
+                  { (idiomaFormateado.length > 0)  && <MySelect label={'Idioma'} name={'idioma_id'} options={idiomaFormateado} /> }
+                </Grid>
+                <Grid item md={4} xs={12} >
+                  {(autoresFormateado.length > 0)  && <MySelect label={'Autor'} name={'autor_id'} options={autoresFormateado} onChange={onChangeAutor} />}
+                </Grid>
+                <Grid item md={4} xs={12} >
+                  {(librosFormateado.length > 0  && !cargandoLibros)  && <MySelect label={'Libro'} name={'libro_id'} options={librosFormateado} />}
+                </Grid>
 
-            <Grid item md={4} xs={12} >
-              <MyTextInput  label={'Ingrese el nombre'} mayuscula name={'nombre'} placeholder='Ingrese el nombre' maxLength={100}/>
-            </Grid>
-            <Grid item md={4} xs={12} >
-              <MyDatePicker name="fecha" label={'Fecha de Emision'} maxDate={maxDate} minDate={minDate} />
-            </Grid>
-            <Grid item md={4} xs={12} >
-              <MyTextInput label={'Ingrese el isbn'} mayuscula name={'isbn'} placeholder='Ingrese el isbn' maxLength={100}/>
-            </Grid>
+                <Grid item md={4} xs={12} >
+                  <MyTextInput  label={'Ingrese el nombre'} mayuscula name={'nombre'} placeholder='Ingrese el nombre' maxLength={100}/>
+                </Grid>
+                <Grid item md={4} xs={12} >
+                  <MyDatePicker name="fecha" label={'Fecha de Emision'} maxDate={maxDate} minDate={minDate} />
+                </Grid>
+                <Grid item md={4} xs={12} >
+                  <MyTextInput label={'Ingrese el isbn'} mayuscula name={'isbn'} placeholder='Ingrese el isbn' maxLength={100}/>
+                </Grid>
 
-            <Grid item md={4} xs={12} >
-              <MyTextInput label={'Número paginas'} numero={'entero'} name={'numero_paginas'} placeholder='Número paginas' maxLength={4}/>
-              {/* <MyNumberInput label={'Número paginas'} min={0} max={10} name={'numero_paginas'} placeholder='Número paginas'/> */}
-            </Grid>
-            
+                <Grid item md={4} xs={12} >
+                  <MyTextInput label={'Número paginas'} numero={'entero'} name={'numero_paginas'} placeholder='Número paginas' maxLength={4}/>
+                  {/* <MyNumberInput label={'Número paginas'} min={0} max={10} name={'numero_paginas'} placeholder='Número paginas'/> */}
+                </Grid>
+                
 
-          </Grid>
-          <Box mt={3} textAlign='center'>
-            <Button type='submit' size='large'  variant="contained" disabled={!(isValid && isDirty)} >Guardar</Button> 
-          </Box>
-        </form>
-      </FormProvider>
+              </Grid>
+              <Box mt={3} textAlign='center'>
+                <Button type='submit' size='large'  variant="contained" disabled={!(isValid)} >Guardar</Button> 
+              </Box>
+            </form>
+          </FormProvider>)
+      }
     </Box>
   )
 }

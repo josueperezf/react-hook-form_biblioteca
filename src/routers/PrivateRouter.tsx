@@ -10,6 +10,7 @@ import { AutoresAddScreen } from '../components/autores/AutoresAddScreen';
 import { AutoresEditScreen } from '../components/autores/AutoresEditScreen';
 import { EdicionesScreen } from '../components/ediciones/EdicionesScreen';
 import { EdicionesAddScreen } from '../components/ediciones/EdicionesAddScreen';
+import { EdicionesEditScreen } from '../components/ediciones/EdicionesEditScreen';
 
 export const PrivateRouter = () => {
   return (
@@ -36,6 +37,7 @@ export const PrivateRouter = () => {
         <Route path='ediciones'>
           <Route index  element={<Accesos roles={['admin']} component={EdicionesScreen }/>}/>
           <Route path="add" element={<Accesos roles={['admin']} component={EdicionesAddScreen }/>}/>
+          <Route path="edit/:id" element={<Accesos roles={['admin']} component={EdicionesEditScreen }/>}/>
         </Route>
 
           {/* <Route path="/*" element={<Navigate to='libros' replace /> } /> */}

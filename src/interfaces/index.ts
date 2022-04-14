@@ -44,6 +44,7 @@ export interface Edicion  {
     id?: number,
     idioma_id: number,
     libro_id: number | null,
+    autor_id: number,
     nombre: string,
     fecha: Date | string | null,
     isbn: string,
