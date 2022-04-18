@@ -18,6 +18,14 @@ export const theme = createTheme({
         },
     },
     components: {
+      MuiLink: {
+        styleOverrides: {
+          root: {
+              color: 'red',
+              textDecoration: 'none'
+          }
+      }
+      },
         MuiListItemText : {
             styleOverrides: {
                 root: {

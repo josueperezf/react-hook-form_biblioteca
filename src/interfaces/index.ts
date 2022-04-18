@@ -38,6 +38,7 @@ export interface Libro {
     titulo: string,
     estatus?: number,
     autores?: any
+    ediciones?: Edicion[]
 }
 
 export interface Edicion  {

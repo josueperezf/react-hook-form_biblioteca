@@ -55,7 +55,7 @@ export const LibrosList = () => {
                   size='small'
                   startIcon={<VisibilityIcon/>}
                   onClick={(event: any) => {
-                    console.log(event, cellValues);
+                    navigate(`/libros/show/${cellValues.id}`);
                   }}
                 >
                   Ver
@@ -69,7 +69,6 @@ export const LibrosList = () => {
                   size='small'
                   startIcon={<EditIcon fontSize='small' />}
                   onClick={() => {
-                    // navigate(`/libros/edit/${cellValues.id}`);
                     handleClickOpen( parseInt((cellValues as any).id) || 0);
                   }}
                 >

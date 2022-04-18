@@ -33,7 +33,7 @@ export const EdicionesScreen = () => {
           </Button>
         </Grid>
       </Grid>
-      {cargando ? <h3>...Cargando</h3> : (Object.keys(ediciones || {}).length > 0) ? <EdicionesList/> : <p>Aun no hay registros para mostrar</p>}
+      {cargando ? <h3>...Cargando</h3> : (ediciones.length > 0) ? <EdicionesList ediciones={ediciones} /> : <p>Aun no hay registros para mostrar</p>}
     </Box>
   )
 }

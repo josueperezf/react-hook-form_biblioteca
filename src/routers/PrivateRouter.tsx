@@ -11,6 +11,7 @@ import { AutoresEditScreen } from '../components/autores/AutoresEditScreen';
 import { EdicionesScreen } from '../components/ediciones/EdicionesScreen';
 import { EdicionesAddScreen } from '../components/ediciones/EdicionesAddScreen';
 import { EdicionesEditScreen } from '../components/ediciones/EdicionesEditScreen';
+import { LibrosShowScreen } from '../components/libros/LibrosShowScreen';
 
 export const PrivateRouter = () => {
   return (
@@ -32,6 +33,7 @@ export const PrivateRouter = () => {
         {/* el crud de libros se hace mediante ventanas dialog */}
         <Route path='libros'>
           <Route index  element={<Accesos roles={['admin']} component={LibrosScreen }/>}/>
+          <Route path="show/:id" element={<Accesos roles={['admin']} component={LibrosShowScreen }/>}/>
         </Route>
 
         <Route path='ediciones'>
