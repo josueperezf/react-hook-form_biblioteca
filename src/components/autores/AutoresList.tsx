@@ -44,7 +44,7 @@ export const AutoresList = () => {
               size='small'
               startIcon={<VisibilityIcon/>}
               onClick={(event: any) => {
-                console.log(event, cellValues);
+                navigate(`/autores/show/${cellValues.id}`);
               }}
             >
               Ver

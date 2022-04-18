@@ -12,6 +12,7 @@ import { EdicionesScreen } from '../components/ediciones/EdicionesScreen';
 import { EdicionesAddScreen } from '../components/ediciones/EdicionesAddScreen';
 import { EdicionesEditScreen } from '../components/ediciones/EdicionesEditScreen';
 import { LibrosShowScreen } from '../components/libros/LibrosShowScreen';
+import { AutoresShowScreen } from '../components/autores/AutoresShowScreen';
 
 export const PrivateRouter = () => {
   return (
@@ -28,6 +29,7 @@ export const PrivateRouter = () => {
           <Route index  element={<Accesos roles={['admin']} component={AutoresScreen }/>}/>
           <Route path="add" element={<Accesos roles={['admin']} component={AutoresAddScreen }/>}/>
           <Route path="edit/:id" element={<Accesos roles={['admin']} component={AutoresEditScreen }/>}/>
+          <Route path="show/:id" element={<Accesos roles={['admin']} component={AutoresShowScreen }/>}/>
         </Route>
 
         {/* el crud de libros se hace mediante ventanas dialog */}
