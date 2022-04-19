@@ -14,6 +14,7 @@ import { EdicionesEditScreen } from '../components/ediciones/EdicionesEditScreen
 import { LibrosShowScreen } from '../components/libros/LibrosShowScreen';
 import { AutoresShowScreen } from '../components/autores/AutoresShowScreen';
 import { CopiasScreen } from '../components/copias/CopiasScreen';
+import { CopiasAddScreen } from '../components/copias/CopiasAddScreen';
 
 export const PrivateRouter = () => {
   return (
@@ -46,7 +47,8 @@ export const PrivateRouter = () => {
         </Route>
 
         <Route path='copias'>
-          <Route index  element={<Accesos roles={['admin']} component={CopiasScreen }/>}/>
+          <Route index element={<Accesos roles={['admin']} component={CopiasScreen }/>}/>
+          <Route path="add" element={<Accesos roles={['admin']} component={CopiasAddScreen }/>}/>
         </Route>
 
           {/* <Route path="/*" element={<Navigate to='libros' replace /> } /> */}

@@ -1,5 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { addEdicion, getEdiciones, getEdicion, updateEdicion } from '../thunk/edicionThunk';
+import { addEdicion, getEdiciones, getEdicion, updateEdicion, getOnlyEdiciones } from '../thunk/edicionThunk';
 import { Edicion } from '../../interfaces/index';
 
 interface EdicionState {
@@ -43,6 +43,25 @@ const EdicionSlice = createSlice({
           state.error = (action.error as any)
         }
       });
+      // getOnlyEdiciones
+    builder
+      .addCase(getOnlyEdiciones.pending, (state) => {
+        state.cargando = true;
+      })
+      .addCase(getOnlyEdiciones.fulfilled, (state, action) => {
+        state.cargando = false;
+        state.edicion = null;
+        state.ediciones = action.payload.ediciones;
+        state.total = action.payload.total;
+      })
+      .addCase(getOnlyEdiciones.rejected, (state, action) => {
+        if (action.payload) {
+          state.error = (action.payload as any) || '';
+        } else {
+          state.error = (action.error as any)
+        }
+      });
+
     //getEdicion 
     builder
       .addCase(getEdicion.pending, (state) => {

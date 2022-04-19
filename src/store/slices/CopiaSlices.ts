@@ -20,9 +20,6 @@ const CopiaSlices = createSlice({
   name: "copias",
   initialState,
   reducers: {
-    // setCopias: (state, action) => {
-    //   state.list = action.payload;
-    // }
   },
   extraReducers: (builder) => {
     // getCopias

@@ -16,6 +16,18 @@ export const getEdiciones  = createAsyncThunk(
   }
 );
 
+export const getOnlyEdiciones  = createAsyncThunk(
+  'ediciones/getOnlyEdiciones',
+  async () => {
+    
+    const response = await clienteAxios.get( `${url}ediciones`);
+    const respuesta = response.data;
+    // The value we return becomes the `fulfilled` action payload
+    // El valor que devolvemos se convierte en la 'carga' útil del action payload
+    return respuesta;
+  }
+);
+
 export const getEdicion  = createAsyncThunk(
   'ediciones/getEdicion',
   async (id: number) => {

@@ -26,8 +26,8 @@ export interface Autor  {
 
 export interface Copia {
     id?: number,
-    pais_id: number,
-    edicion_id: number,
+    estado_id?: number,
+    edicion_id: number | null,
     codigo: string,
     serial: string,
 }
