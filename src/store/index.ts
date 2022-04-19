@@ -1,5 +1,6 @@
 import { configureStore } from '@reduxjs/toolkit'
 import AutorSlices from './slices/AutorSlices';
+import CopiaSlices from './slices/CopiaSlices';
 import EdicionSlice from './slices/EdicionSlices';
 import IdiomaSlice from './slices/IdiomaSlices';
 import LibroSlice from './slices/LibroSlices';
@@ -9,6 +10,7 @@ import PersonaSlice from './slices/PersonaSlices';
 export const store = configureStore({
   reducer: {
     autores: AutorSlices,
+    copias: CopiaSlices,
     ediciones: EdicionSlice,
     idiomas: IdiomaSlice,
     libros: LibroSlice,

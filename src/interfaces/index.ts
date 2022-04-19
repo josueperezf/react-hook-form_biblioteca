@@ -24,6 +24,13 @@ export interface Autor  {
     libros?: Libro[]
 }
 
+export interface Copia {
+    id?: number,
+    pais_id: number,
+    edicion_id: number,
+    codigo: string,
+    serial: string,
+}
 export interface Pais {
     id: number,
     nombre: string,
