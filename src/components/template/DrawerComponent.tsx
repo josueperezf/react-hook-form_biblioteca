@@ -1,4 +1,5 @@
 import React from 'react'
+import { NavLink } from 'react-router-dom';
 import List from '@mui/material/List';
 import ListItem from '@mui/material/ListItem';
 import ListItemIcon from '@mui/material/ListItemIcon';
@@ -6,8 +7,8 @@ import ListItemText from '@mui/material/ListItemText';
 import People from '@mui/icons-material/People';
 import AssignmentIndIcon from '@mui/icons-material/AssignmentInd';
 import MenuBookIcon from '@mui/icons-material/MenuBook';
-import { NavLink } from 'react-router-dom';
-
+import BookmarksIcon from '@mui/icons-material/Bookmarks';
+import DynamicFeedIcon from '@mui/icons-material/DynamicFeed';
 
 export const DrawerComponent = () => {
   return (
@@ -40,9 +41,17 @@ export const DrawerComponent = () => {
         <NavLink className={''} style={{textDecoration: 'none'}} to={'/ediciones'} >
             <ListItem button   >
                 <ListItemIcon>
-                    <MenuBookIcon />
+                    <BookmarksIcon />
                 </ListItemIcon>
                     <ListItemText primary='Ediciones' />
+            </ListItem>
+        </NavLink>
+        <NavLink style={{textDecoration: 'none'}} to={'/copias'} >
+            <ListItem button   >
+                <ListItemIcon>
+                    <DynamicFeedIcon />
+                </ListItemIcon>
+                <ListItemText primary='Copias' />
             </ListItem>
         </NavLink>
       </List>
