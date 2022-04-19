@@ -21,6 +21,7 @@ export interface Autor  {
     id?: number,
     nombre: string,
     pais_id: number | null,
+    libros?: Libro[]
 }
 
 export interface Pais {

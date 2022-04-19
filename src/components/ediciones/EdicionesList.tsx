@@ -34,11 +34,11 @@ export const EdicionesList = ({ediciones}: Props) => {
   const navigate = useNavigate();
 
   let columns: GridColDef[] = [
-    { field: 'idioma', headerName: 'Idioma', editable: false, valueFormatter: (data : any) => data.value.nombre },
+    { field: 'idioma', headerName: 'Idioma', width: 100, editable: false, valueFormatter: (data : any) => data.value.nombre },
     // { field: 'libro', headerName: 'Libro', minWidth: 200, editable: false, valueFormatter: (data : any) => data.value.titulo },
-    { field: 'nombre', headerName: 'Nombre', minWidth: 200, editable: false, flex: 1 },
-    { field: 'fecha', headerName: 'Fecha', width: 80, flex: 1, valueFormatter: (data : any) =>  format(new Date (data.value), "dd-MM-yyyy" ) },
-    { field: 'print', headerName: 'Acciones', disableExport: true, width: 150, flex: 1, sortable: false, filterable: false, disableColumnMenu: true,
+    { field: 'nombre', headerName: 'Nombre', minWidth: 250, editable: false, flex: 1 },
+    { field: 'fecha', headerName: 'Fecha', width: 100,  valueFormatter: (data : any) =>  format(new Date (data.value), "dd-MM-yyyy" ) },
+    { field: 'print', headerName: 'Acciones', disableExport: true, width: 200, sortable: false, filterable: false, disableColumnMenu: true,
     renderCell: (cellValues) => {
       return (
         <Grid container spacing={2}>
@@ -87,8 +87,10 @@ export const EdicionesList = ({ediciones}: Props) => {
 
   return (
     <>
-      <div style={{height: 400, width: '100%' }}>
+      <div style={{width: '100%' }}>
+        {/* al DataGrid se le coloco una clase css '.MuiDataGrid-root .MuiDataGrid-cell' en el index.css para que las celdas saltaran de linea si no cabe el texto */}
         <DataGrid
+          autoHeight
           disableSelectionOnClick
           hideFooterSelectedRowCount
           rows={ediciones}

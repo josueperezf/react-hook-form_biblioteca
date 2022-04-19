@@ -83,13 +83,15 @@ export const LibrosList = () => {
   ];
   return (
     <>
-      <div style={{height: 600, width: '100%' }}>
+      <div style={{ width: '100%' }}>
         <LibrosEditDialog
           id={id}
           open={open}
           onClose={handleClose}
         />
+        {/* al DataGrid se le coloco una clase css '.MuiDataGrid-root .MuiDataGrid-cell' en el index.css para que las celdas saltaran de linea si no cabe el texto */}
         <DataGrid
+          autoHeight
           disableSelectionOnClick
           hideFooterSelectedRowCount
           rows={libros}

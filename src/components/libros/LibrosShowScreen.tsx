@@ -1,16 +1,14 @@
 import { Box } from '@mui/system';
-import React from 'react'
-import { Link, useNavigate, useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import { useAppDispatch, useAppSelector } from '../../hooks/useRedux';
 import { Typography, Grid, Stack, Chip } from '@mui/material';
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import { getLibro } from '../../store/thunk/libroThunk';
 import { Autor } from '../../interfaces/index';
 import { EdicionesList } from '../ediciones/EdicionesList';
 
 export const LibrosShowScreen = () => {
   const dispatch = useAppDispatch();
-  const [autores, setAutores] = useState<{id:number, nombre: string}[]>([]);
   const navigate = useNavigate();
   const params = useParams();
   const id = parseInt(params.id || '') ;
@@ -31,15 +29,7 @@ export const LibrosShowScreen = () => {
       }
     }
     cargarData();
-  }, [dispatch]);
-
-  useEffect(() => {
-    if (libro && Object.keys(libro).length > 0 && Object.keys(libro.autores).length > 0) {
-      // libro.autores.map(({id, nombre})=>({id, nombre}))
-
-    }
-  }, [libro])
-  
+  }, [dispatch]);  
 
   return (
     <>
@@ -63,7 +53,7 @@ export const LibrosShowScreen = () => {
                           {
                             libro.autores.map(({id, nombre}: Autor) => (
                               <span key={id}>
-                                  <Chip  label={nombre} color="info" onClick={()=>navigate(`/autores/edit/${id}`)} /><span> </span>
+                                  <Chip  label={nombre} color="info" onClick={()=>navigate(`/autores/show/${id}`)} /><span> </span>
                                 </span>)
                               )
                           }

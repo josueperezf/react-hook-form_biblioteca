@@ -17,3 +17,6 @@ code {
 .cursor-pointer {
   cursor: pointer;
 }
+.MuiDataGrid-root .MuiDataGrid-cell{
+  white-space: normal !important;
+}
