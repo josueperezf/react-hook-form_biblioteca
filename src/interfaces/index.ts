@@ -70,3 +70,11 @@ export interface Edicion  {
     estatus?: number,
     [x: string]: any
 }
+export interface Usuario {
+    id?: number,
+    login: string,
+    password?: string,
+    persona_id: number,
+    tipo_usuario_id: number,
+    estatus?: number,
+}
