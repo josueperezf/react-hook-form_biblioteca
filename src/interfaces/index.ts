@@ -75,6 +75,7 @@ export interface Usuario {
     login: string,
     password?: string,
     persona_id: number,
+    persona?: Persona,
     tipo_usuario_id: number,
     estatus?: number,
 }

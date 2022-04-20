@@ -6,6 +6,7 @@ import IdiomaSlice from './slices/IdiomaSlices';
 import LibroSlice from './slices/LibroSlices';
 import PaisSlice from './slices/PaisSlices';
 import PersonaSlice from './slices/PersonaSlices';
+import UsuarioSlice from './slices/UsuarioSlices';
 
 export const store = configureStore({
   reducer: {
@@ -16,6 +17,7 @@ export const store = configureStore({
     libros: LibroSlice,
     paises: PaisSlice,
     personas: PersonaSlice,
+    usuarios: UsuarioSlice,
     // comments: commentsReducer,
     // users: usersReducer
   }

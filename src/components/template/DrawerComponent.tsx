@@ -6,9 +6,10 @@ import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
 import People from '@mui/icons-material/People';
 import AssignmentIndIcon from '@mui/icons-material/AssignmentInd';
-import MenuBookIcon from '@mui/icons-material/MenuBook';
 import BookmarksIcon from '@mui/icons-material/Bookmarks';
 import DynamicFeedIcon from '@mui/icons-material/DynamicFeed';
+import MenuBookIcon from '@mui/icons-material/MenuBook';
+import PersonOutlineIcon from '@mui/icons-material/PersonOutline';
 
 export const DrawerComponent = () => {
   return (
@@ -52,6 +53,14 @@ export const DrawerComponent = () => {
                     <DynamicFeedIcon />
                 </ListItemIcon>
                 <ListItemText primary='Copias' />
+            </ListItem>
+        </NavLink>
+        <NavLink style={{textDecoration: 'none'}} to={'/usuarios'} >
+            <ListItem button   >
+                <ListItemIcon>
+                    <PersonOutlineIcon />
+                </ListItemIcon>
+                <ListItemText primary='Usuarios' />
             </ListItem>
         </NavLink>
       </List>
