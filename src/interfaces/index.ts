@@ -13,6 +13,11 @@ export interface Error400  {
     param: string,
     value: string,
 }
+export interface Estado  {
+    id?: number,
+    nombre: string,
+    estatus?: number,
+}
 
 export interface Autor  {
     biografia: string,
@@ -26,9 +31,12 @@ export interface Autor  {
 
 export interface Copia {
     id?: number,
-    estado_id?: number,
-    edicion_id: number | null,
     codigo: string,
+    edicion_id: number | null | any,
+    edicion?: Edicion,
+    estado_id?: number,
+    estado?: Estado,
+    prestamos?: [],
     serial: string,
 }
 export interface Pais {

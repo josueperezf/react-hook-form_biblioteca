@@ -67,7 +67,7 @@ export const CopiasAddScreen = () => {
 
   return (
     <Box >
-      <Typography align='center' variant='h5' mb={2} >Nueva Persona</Typography>
+      <Typography align='center' variant='h5' mb={2} >Nueva Copia</Typography>
       <FormProvider {...formMethods} >
         <form onSubmit={handleSubmit(onSubmit)}>
           <Grid container spacing={3}>

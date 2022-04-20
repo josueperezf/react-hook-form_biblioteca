@@ -60,7 +60,7 @@ export const CopiasList = ({copias}: Props) => {
                 size='small'
                 startIcon={<EditIcon fontSize='small' />}
                 onClick={() => {
-                  navigate(`/personas/edit/${cellValues.id}`);
+                  navigate(`/copias/edit/${cellValues.id}`);
                 }}
               >
                 Editar
