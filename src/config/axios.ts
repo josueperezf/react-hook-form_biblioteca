@@ -9,7 +9,7 @@ clienteAxios.interceptors.request.use(function (config: AxiosRequestConfig) {
     const token = localStorage.getItem('token') || null;
     if (token) {
         config.headers = {
-            'x-auth-token': token
+            'x-token': token
         }
     } else{
         config.headers = {}
