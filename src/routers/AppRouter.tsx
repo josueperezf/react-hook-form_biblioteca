@@ -9,7 +9,7 @@ import { getUserAuth } from '../store/thunk/authThunk';
 export const AppRouter = () => {
   const [verificando, setVerificando] = useState(true);
   const [logueado, setlogueado] = useState<boolean >(false);
-  const { usuario, cargando: cargandoAuth} = useAppSelector(state => state.auth);
+  const { usuario} = useAppSelector(state => state.auth);
   const dispatch = useAppDispatch();
 
   useEffect(() => {

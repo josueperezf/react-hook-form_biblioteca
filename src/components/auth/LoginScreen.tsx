@@ -8,7 +8,6 @@ import { useSnackbar } from 'notistack';
 import { loginAuth } from '../../store/thunk/authThunk';
 import { Error400, Auth } from '../../interfaces/index';
 import { MyTextInput } from '../customInputs/MyTextInput';
-import { LoadingButton } from '@mui/lab';
 
 const defaultValues: Auth = {
   login: '',
@@ -49,6 +48,9 @@ const LoginScreen = () => {
       }
     }
   }
+  const irRegistro = () => {
+    navigate('/registro');
+  }
 
   return (
     <Box display="flex" justifyContent="center" alignItems="center" minHeight="100vh">
@@ -69,10 +71,10 @@ const LoginScreen = () => {
               <Box ml={1} mr={1} width={'100%'}>
                 <Grid container spacing={2}>
                   <Grid item md={6}  >
-                    <Button fullWidth variant="contained" >Registrar</Button> 
+                    <Button fullWidth variant="contained" onClick={irRegistro} disabled={cargando} >Registrar</Button> 
                   </Grid>
                   <Grid item md={6}>
-                    <Button type='submit' fullWidth variant="contained" disabled={!(isValid )} >
+                    <Button type='submit' fullWidth variant="contained" disabled={(!isValid || cargando )} >
                       {(cargando) && <><CircularProgress size={'16px'} />&nbsp;</>}
                       Iniciar
                     </Button> 

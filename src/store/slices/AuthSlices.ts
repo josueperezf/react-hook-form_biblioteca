@@ -65,7 +65,6 @@ const AuthSlice = createSlice({
       })
       .addCase(loginAuth.rejected, (state, action) => {
         state.cargando = false;
-        console.log({action});
         if (action.payload) {
           state.error = (action.payload as any) || null;
         } else {
