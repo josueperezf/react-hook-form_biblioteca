@@ -14,7 +14,6 @@ export const EdicionesScreen = () => {
 
   useEffect(() => {
     dispatch(getEdiciones());
-    console.log(ediciones);
     
   }, [])
   

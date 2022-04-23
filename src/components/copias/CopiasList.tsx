@@ -71,7 +71,6 @@ export const CopiasList = ({copias}: Props) => {
       }
     }
   ];
-  console.log(copias);
   
   return (
     <>
