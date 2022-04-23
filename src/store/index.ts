@@ -1,4 +1,5 @@
 import { configureStore } from '@reduxjs/toolkit'
+import AuthSlice from './slices/AuthSlices';
 import AutorSlices from './slices/AutorSlices';
 import CopiaSlices from './slices/CopiaSlices';
 import EdicionSlice from './slices/EdicionSlices';
@@ -10,6 +11,7 @@ import UsuarioSlice from './slices/UsuarioSlices';
 
 export const store = configureStore({
   reducer: {
+    auth: AuthSlice,
     autores: AutorSlices,
     copias: CopiaSlices,
     ediciones: EdicionSlice,

@@ -39,6 +39,7 @@ const LibroSlice = createSlice({
         state.total = action.payload.total;
       })
       .addCase(getLibros.rejected, (state, action) => {
+        state.cargando = false;
         if (action.payload) {
           state.error = (action.payload as any) || '';
         } else {
