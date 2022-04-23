@@ -20,3 +20,12 @@ code {
 .MuiDataGrid-root .MuiDataGrid-cell{
   white-space: normal !important;
 }
+.pl-16 {
+  padding-left: 16px;
+}
+.pr-16 {
+  padding-right: 16px;
+}
+.pb-16 {
+  padding-bottom: 16px;
+}

@@ -1,24 +1,52 @@
-import React, { useState } from 'react'
+import { useState, useEffect } from 'react';
 import { BrowserRouter } from 'react-router-dom';
 import {  PrivateRouter } from './PrivateRouter';
 import { PublicRouter } from './PublicRouter';
+import { useAppSelector, useAppDispatch } from '../hooks/useRedux';
+import { getUserAuth } from '../store/thunk/authThunk';
 
-const logueado = true;
+
 export const AppRouter = () => {
-  const [cargando, setCargando] = useState(true);
+  const [verificando, setVerificando] = useState(true);
+  const [logueado, setlogueado] = useState<boolean >(false);
+  const { usuario, cargando: cargandoAuth} = useAppSelector(state => state.auth);
+  const dispatch = useAppDispatch();
+
+  useEffect(() => {
+    const consultarUser = async () => {
+      const token = localStorage.getItem('token') || null;
+      if (!usuario && token) {
+        try {
+          await dispatch(getUserAuth()).unwrap();
+        } catch (error) {
+          localStorage.removeItem('token');
+          setlogueado(false)
+          setVerificando(false);
+        }
+      }
+      setVerificando(false);
+    }
+    consultarUser();
+  }, [])
   
-  setTimeout(() => {
-    setCargando(false);
-  }, 1000);
-
-  if (cargando) {
-    return <h4>...Cargando</h4>
-  }
-
+  useEffect(() => {
+    if (usuario){
+      setlogueado(true)
+      setVerificando(false);
+    } else {
+      if (!verificando) {
+        setVerificando(false);
+        setlogueado(false)
+      }
+    }
+  }, [usuario]);
+  
   return (
     <BrowserRouter>
       {
-        !logueado ? <PublicRouter /> : <PrivateRouter />
+        (verificando)
+        ? <h4>...Cargando</h4>
+        : (!logueado && !usuario) ? <PublicRouter /> : <PrivateRouter />
       }
     </BrowserRouter>
   )

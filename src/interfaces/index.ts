@@ -1,3 +1,11 @@
+export interface UsuarioLogueado extends Usuario {
+    token: string,
+    tipo_usuario: TipoUsuario,
+}
+export interface Auth {
+    login: string,
+    password: string,
+}
 export interface Persona  {
     direccion: string,
     dni: string,
@@ -69,6 +77,11 @@ export interface Edicion  {
     tipo?: number | null,
     estatus?: number,
     [x: string]: any
+}
+export interface TipoUsuario {
+    id?: number,
+    nombre: string,
+    estatus?: number,
 }
 export interface Usuario {
     id?: number,
