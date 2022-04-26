@@ -63,10 +63,10 @@ export const BuscarPersonaPorDNI = ({fn, tipo}:Props) => {
     <FormProvider {...formMethods} >
       <form onSubmit={handleSubmit(onSubmit)}>
         <Grid container spacing={2}>
-          <Grid item md={8}  >
+          <Grid item md={8} xs={8} >
             <MyTextInput label={'DNI o RUT'} name={'dni'} placeholder='DNI o RUT' maxLength={30} onChange={formatearInputRut} />
           </Grid>
-          <Grid item md={4} >
+          <Grid item md={4} xs={4}>
             <Button type='submit' fullWidth variant="contained" size='large' style={{height: '56px' }} disabled={(!isValid || cargando )} >
               <SearchIcon/>
               Buscar
