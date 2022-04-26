@@ -89,6 +89,6 @@ export interface Usuario {
     password?: string,
     persona_id: number,
     persona?: Persona,
-    tipo_usuario_id: number,
+    tipo_usuario_id?: number,
     estatus?: number,
 }

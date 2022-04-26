@@ -23,7 +23,16 @@ export const UsuariosScreen = () => {
   
   return (
     <Box>
-      <Typography align='center' variant='h5' mb={3} >Usuarios</Typography>
+      <Grid container spacing={2} mb={2}>
+        <Grid item alignItems='center' md={11}>
+          <Typography align='center' variant='h5' mb={3} >Usuarios</Typography>
+        </Grid>
+        <Grid item md={1}>
+          <Button onClick={redirigir}>
+            <AddCircleIcon/>
+          </Button>
+        </Grid>
+      </Grid>
       {cargando ? <h3>...Cargando</h3> : (Object.keys(usuarios || {}).length > 0) ? <UsuariosList usuarios={usuarios} /> : <p>Aun no hay registros para mostrar</p>}
     </Box>
   )

@@ -1,4 +1,4 @@
-import { Box, CardActions, CardContent, Typography, Button, CardHeader, Card, Grid, CircularProgress, LinearProgress } from '@mui/material';
+import { Box, CardActions, CardContent, Button, CardHeader, Card, Grid, CircularProgress, LinearProgress } from '@mui/material';
 import { FormProvider, useForm } from "react-hook-form";
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as Yup from 'yup';
@@ -64,16 +64,13 @@ const LoginScreen = () => {
             <CardContent>
               <Box mt={3}>
                 <MyTextInput label={'Login o Correo'} name={'login'} placeholder='Login o Correo' maxLength={30} />
-                <MyTextInput label={'Password o Clave'} name={'password'} placeholder='Password o Clave' maxLength={20} />
+                <MyTextInput label={'Password o Clave'} name={'password'} type='password' placeholder='Password o Clave' maxLength={20} />
               </Box>
             </CardContent>
             <CardActions className='pl-16' >
               <Box ml={1} mr={1} width={'100%'}>
                 <Grid container spacing={2}>
-                  <Grid item md={6}  >
-                    <Button fullWidth variant="contained" onClick={irRegistro} disabled={cargando} >Registrar</Button> 
-                  </Grid>
-                  <Grid item md={6}>
+                  <Grid item md={12}>
                     <Button type='submit' fullWidth variant="contained" disabled={(!isValid || cargando )} >
                       {(cargando) && <><CircularProgress size={'16px'} />&nbsp;</>}
                       Iniciar

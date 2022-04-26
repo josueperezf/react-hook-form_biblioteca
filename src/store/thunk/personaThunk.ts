@@ -30,6 +30,32 @@ export const getPersona  = createAsyncThunk(
   }
 );
 
+export const getPersonaPorDNI  = createAsyncThunk(
+  'personas/getPersonaPorDNI',
+  async (dni: string, { rejectWithValue }) => {
+    try {
+      const response = await clienteAxios.get( `${url}personas/dni/${dni}`);
+      const respuesta = response.data;
+      return respuesta;
+    } catch (error) {
+      return rejectWithValue(error);
+    }
+  }
+);
+
+export const getPersonaSinUsuarioPorDNI  = createAsyncThunk(
+  'personas/getPersonaSinUsuarioPorDNI',
+  async (dni: string, { rejectWithValue }) => {
+    try {
+      const response = await clienteAxios.get( `${url}personas/su/dni/${dni}`);
+      const respuesta = response.data;
+      return respuesta;
+    } catch (error) {
+      return rejectWithValue(error);
+    }
+  }
+);
+
 export const addPersona  = createAsyncThunk(
   'personas/addPersona',
   async (persona: Persona, { rejectWithValue }) => {

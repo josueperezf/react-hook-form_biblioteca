@@ -1,5 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { addPersona, getPersonas, getPersona, updatePersona } from '../thunk/personaThunk';
+import { addPersona, getPersonas, getPersona, updatePersona, getPersonaPorDNI, getPersonaSinUsuarioPorDNI } from '../thunk/personaThunk';
 import { Persona } from '../../interfaces/index';
 
 interface PersonaState {
@@ -20,9 +20,9 @@ const PersonaSlice = createSlice({
   name: "personas",
   initialState,
   reducers: {
-    // setPersonas: (state, action) => {
-    //   state.list = action.payload;
-    // }
+    setPersona: (state, action) => {
+      state.persona = action.payload || null;
+    }
   },
   extraReducers: (builder) => {
     // getPersonas
@@ -61,7 +61,44 @@ const PersonaSlice = createSlice({
           state.error = (action.error as any)
         }
       });
-
+    
+    // getPersonaPorDNI
+    builder
+      .addCase(getPersonaPorDNI.pending, (state) => {
+        state.cargando = true;
+        state.persona = null;
+      })
+      .addCase(getPersonaPorDNI.fulfilled, (state, action) => {
+        state.cargando = false;
+        state.persona = action.payload.persona;
+      })
+      .addCase(getPersonaPorDNI.rejected, (state, action) => {
+        state.cargando = false;
+        if (action.payload) {
+          state.error = (action.payload as any) || '';
+        } else {
+          state.error = (action.error as any)
+        }
+      });
+    
+    // getPersonaPorDNI
+    builder
+      .addCase(getPersonaSinUsuarioPorDNI.pending, (state) => {
+        state.cargando = true;
+        state.persona = null;
+      })
+      .addCase(getPersonaSinUsuarioPorDNI.fulfilled, (state, action) => {
+        state.cargando = false;
+        state.persona = action.payload.persona;
+      })
+      .addCase(getPersonaSinUsuarioPorDNI.rejected, (state, action) => {
+        state.cargando = false;
+        if (action.payload) {
+          state.error = (action.payload as any) || '';
+        } else {
+          state.error = (action.error as any)
+        }
+      });
     // addPersona
     builder
       .addCase(addPersona.pending, (state) => {
@@ -101,11 +138,5 @@ const PersonaSlice = createSlice({
   },
 });
 
-// export const { setPersonas } = userSlice.actions;
-
+export const { setPersona } = PersonaSlice.actions;
 export default PersonaSlice.reducer;
-
-
-// prueba
-// export const personaReducer = userSlice.reducer;
-

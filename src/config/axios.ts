@@ -19,7 +19,7 @@ clienteAxios.interceptors.request.use(function (config: AxiosRequestConfig) {
 
 clienteAxios.interceptors.response.use(response => response,
     error => {
-        alert('hay un error');
+        // alert('hay un error');
         if (error.response) {
             // The request was made and the server responded with a status code
             // that falls out of the range of 2xx
