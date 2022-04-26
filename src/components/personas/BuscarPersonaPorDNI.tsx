@@ -40,7 +40,7 @@ export const BuscarPersonaPorDNI = ({fn, tipo}:Props) => {
     try {
       (tipo === 'todos') ? await dispatch(getPersonaPorDNI(data.dni)).unwrap() : await dispatch(getPersonaSinUsuarioPorDNI (data.dni)).unwrap()
     } catch (error: any) {
-      enqueueSnackbar('Acceso denegado', { variant: 'error', anchorOrigin: { horizontal: 'center', vertical: 'top'}});
+      // enqueueSnackbar('Acceso denegado', { variant: 'error', anchorOrigin: { horizontal: 'center', vertical: 'top'}});
       if (error && error.errors) {
         const errors: [] = error.errors || [];
         errors.forEach(({msg}: Error400) => {
