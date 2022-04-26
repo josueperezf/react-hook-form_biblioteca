@@ -21,7 +21,7 @@ const defaultValues: Usuario = {
 const validationSchema =
   Yup.object({
     login: Yup.string().email('debe ser un correo valido').trim().min(3, 'debe contener al menos 3 caracteres').max(50, 'Debe tener 50 caracteres o menos').required('Requerido'),
-    password: Yup.string().trim().min(6, 'debe contener al menos 6 caracteres').max(50, 'Debe tener 50 caracteres o menos').required('Requerido'),
+    password: Yup.string().trim().min(6, 'debe contener al menos 6 caracteres').max(10, 'Debe tener 10 caracteres o menos').required('Requerido'),
     persona_id: Yup.string().notOneOf(['0']).required('Requerido'),
 });
 
@@ -95,7 +95,7 @@ export const UsuariosAddScreen = () => {
                     <MyTextInput label={'Login o Correo'} name={'login'} placeholder='Login o Correo' maxLength={30} disabled={persona === null} />
                   </Grid>
                   <Grid item md={4} xs={12} >
-                    <MyTextInput label={'Password o Clave'} name={'password'} type='password' placeholder='Password o Clave' maxLength={20} disabled={persona === null}/>
+                    <MyTextInput label={'Password o Clave'} name={'password'} type='password' placeholder='Password o Clave' maxLength={10} disabled={persona === null}/>
                   </Grid>
                 </Grid>
                 <Box mt={3} textAlign='center'>
