@@ -37,6 +37,12 @@ export interface Autor  {
     libros?: Libro[]
 }
 
+export interface CambioPassword {
+    id?: number,
+    password: string,
+    newPassword: string,
+    confirm?: string,
+}
 export interface Copia {
     id?: number,
     codigo: string,

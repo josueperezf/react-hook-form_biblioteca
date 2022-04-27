@@ -5,6 +5,7 @@ import { useState } from 'react';
 import IconButton from '@mui/material/IconButton';
 import MenuIcon from '@mui/icons-material/Menu';
 import Toolbar from '@mui/material/Toolbar';
+import { UsuariosEditPassDialog } from '../usuarios/UsuariosEditPassDialog';
 
 interface Props {
   handleDrawerToggle: () => void
@@ -12,6 +13,7 @@ interface Props {
 export const MyToolbar = ({ handleDrawerToggle}: Props) => {
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
   const {usuario} = useAppSelector(state => state.auth);
+  const [open, setOpen] = useState(false);
   const dispatch = useAppDispatch();
 
   const handleMenu = (event: React.MouseEvent<HTMLElement>) => {
@@ -26,55 +28,67 @@ export const MyToolbar = ({ handleDrawerToggle}: Props) => {
     handleClose();
     dispatch(logout());
   }
+  const handleEdit = ()=>{
+    handleClose();
+    setOpen(true);
+  }
+  const handleCloseDialog = (value: boolean) => {
+    setOpen(false);
+    (value) && salir();
+  };
   return (
-    <Toolbar>
-      <IconButton
-        color="inherit"
-        aria-label="open drawer"
-        edge="start"
-        onClick={handleDrawerToggle}
-        sx={{ mr: 2, display: { sm: 'none' } }}
-      >
-        <MenuIcon />
-      </IconButton>
-      <Typography variant="h5" noWrap component="div" sx={{ flexGrow: 1 }}>
-        Biblioteca
-      </Typography>
-      {/* <Button color="inherit">Login</Button> */}
-      {(usuario) && (
-        <div>
-          <IconButton
-            size="large"
-            aria-label="account of current user"
-            aria-controls="menu-appbar"
-            aria-haspopup="true"
-            onClick={handleMenu}
-            color="inherit"
-          >
-            <Typography  fontSize={14} >
-              {usuario.persona?.nombre}
-            </Typography>
-          </IconButton>
-          <Menu
-            id="menu-appbar"
-            anchorEl={anchorEl}
-            anchorOrigin={{
-              vertical: 'bottom',
-              horizontal: 'right',
-            }}
-            keepMounted
-            transformOrigin={{
-              vertical: 'top',
-              horizontal: 'right',
-            }}
-            open={Boolean(anchorEl)}
-            onClose={handleClose}
-          >
-            <MenuItem onClick={handleClose}>Editar</MenuItem>
-            <MenuItem onClick={salir}>Salir</MenuItem>
-          </Menu>
-        </div>
-      )}
-    </Toolbar>
+    <>
+      <UsuariosEditPassDialog open={open} onClose={handleCloseDialog}/>
+      
+      <Toolbar>
+        <IconButton
+          color="inherit"
+          aria-label="open drawer"
+          edge="start"
+          onClick={handleDrawerToggle}
+          sx={{ mr: 2, display: { sm: 'none' } }}
+        >
+          <MenuIcon />
+        </IconButton>
+        <Typography variant="h5" noWrap component="div" sx={{ flexGrow: 1 }}>
+          Biblioteca
+        </Typography>
+        {/* <Button color="inherit">Login</Button> */}
+        {(usuario) && (
+          <div>
+            <IconButton
+              size="large"
+              aria-label="account of current user"
+              aria-controls="menu-appbar"
+              aria-haspopup="true"
+              onClick={handleMenu}
+              color="inherit"
+            >
+              <Typography  fontSize={14} >
+                {usuario.persona?.nombre}
+              </Typography>
+            </IconButton>
+            <Menu
+              id="menu-appbar"
+              anchorEl={anchorEl}
+              anchorOrigin={{
+                vertical: 'bottom',
+                horizontal: 'right',
+              }}
+              keepMounted
+              transformOrigin={{
+                vertical: 'top',
+                horizontal: 'right',
+              }}
+              open={Boolean(anchorEl)}
+              onClose={handleClose}
+            >
+              <MenuItem onClick={handleEdit }>Editar</MenuItem>
+              <MenuItem onClick={salir}>Salir</MenuItem>
+            </Menu>
+          </div>
+        )}
+      </Toolbar>
+    </>
   )
 }

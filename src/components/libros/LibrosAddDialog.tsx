@@ -22,7 +22,6 @@ const validationSchema = Yup.object({
 
 export interface LibrosAddDialogProps {
   open: boolean;
-  selectedValue?: string | any;
   onClose: (value: boolean) => void;
 }
 

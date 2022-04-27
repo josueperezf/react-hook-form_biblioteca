@@ -3,8 +3,7 @@
 // import { setUsuarios } from '../slices/UsuarioSlices';
 import clienteAxios from '../../config/axios';
 import { createAsyncThunk } from '@reduxjs/toolkit';
-import { Usuario } from '../../interfaces/index';
-import { format } from 'date-fns';
+import { Usuario, CambioPassword } from '../../interfaces/index';
 const url = process.env.REACT_APP_API;
 
 export const getUsuarios  = createAsyncThunk(
@@ -24,32 +23,29 @@ export const getUsuario  = createAsyncThunk(
   async (id: number) => {
     const response = await clienteAxios.get( `${url}usuarios/${id}`);
     const respuesta = response.data;
-    console.log(respuesta);
-    
     return respuesta;
   }
 );
 
 export const addUsuario  = createAsyncThunk(
   'usuarios/addUsuario',
-  async (persona: Usuario, { rejectWithValue }) => {
+  async (usuario: Usuario, { rejectWithValue }) => {
     try {
-      const response = await clienteAxios.post( `${url}usuarios`, persona);
+      const response = await clienteAxios.post( `${url}usuarios`, usuario);
       const respuesta = response.data;
       return respuesta;
-      
     } catch (error: any) {
         return rejectWithValue(error);
     }
   }
 );
 
-export const updateUsuario  = createAsyncThunk(
-  'usuarios/updateUsuario',
-  async (persona: Usuario, { rejectWithValue }) => {
+export const updateUsuarioPass  = createAsyncThunk(
+  'usuarios/updateUsuarioPass',
+  async (cambioPassword: CambioPassword, { rejectWithValue }) => {
     try {
-      const {id} = persona;
-      const response = await clienteAxios.put( `${url}usuarios/${id}`, persona);
+      const {id} = cambioPassword;
+      const response = await clienteAxios.put( `${url}usuarios/p/${id}`, cambioPassword);
       const respuesta = response.data;
       return respuesta;
     } catch (error: any) {
