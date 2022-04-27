@@ -49,6 +49,7 @@ export const PersonasList = () => {
         { field: 'print', headerName: 'Acciones', disableExport: true, minWidth: 120, sortable: false, filterable: false, disableColumnMenu: true,
         renderCell: (cellValues) => {
           return (
+            // deberia de estar el boton ver para mostrar datos personales y los prestamos que ha hecho cada persona pero como no hice el crud de prestamos, lo deje asi
             <Box textAlign={'center'} width={'100%'}>
               <Button variant="contained" color="primary" size='small' startIcon={<EditIcon fontSize='small' />}
                 onClick={() => {

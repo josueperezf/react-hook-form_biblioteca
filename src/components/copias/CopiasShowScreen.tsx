@@ -71,13 +71,13 @@ export const CopiasShowScreen = () => {
                   <Box mb={1}>
                     <Typography align='left' display={'inline-block'} variant='subtitle1' fontWeight={'bold'} >Acciones:</Typography>
                     <Box>
-                    <Button variant="contained" color="primary" size='small' startIcon={<VisibilityIcon/>}
-                      onClick={() => {
-                        navigate(`/libros/show/${copia.edicion?.libro_id}`);
-                      }}
-                    >
-                      Ver libro
-                    </Button>
+                      <Button variant="contained" color="primary" size='small' startIcon={<VisibilityIcon/>}
+                        onClick={() => {
+                          navigate(`/libros/show/${copia.edicion?.libro_id}`);
+                        }}
+                      >
+                        Ver libro
+                      </Button>
                       </Box>
                   </Box>
               </Box>

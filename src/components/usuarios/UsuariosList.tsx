@@ -6,6 +6,7 @@ import { Grid, Button } from '@mui/material';
 import VisibilityIcon from '@mui/icons-material/Visibility';
 import EditIcon from '@mui/icons-material/Edit';
 import { formatRut } from '../../helpers/formatRut';
+import { Box } from '@mui/system';
 
 interface Props {
     usuarios: Usuario[]
@@ -27,38 +28,22 @@ export const UsuariosList = ({usuarios}: Props) => {
       { field: 'dni', headerName: 'DNI', minWidth: 200, editable: false, valueFormatter: (data: any)=> formatRut(data.value ) },
       { field: 'nombre', headerName: 'Nombre', minWidth: 200, editable: false },
       { field: 'login', headerName: 'Login', minWidth: 200, editable: false, flex: 1 },
-      { field: 'print', headerName: 'Acciones', disableExport: true, minWidth: 200, sortable: false, filterable: false, disableColumnMenu: true,
+      { field: 'print', headerName: 'Acciones', disableExport: true, minWidth: 120, sortable: false, filterable: false, disableColumnMenu: true,
       renderCell: (cellValues) => {
         return (
-          <Grid container spacing={2}>
-            <Grid item>
-              <Button
-                variant="contained"
-                color="primary"
-                size='small'
-                startIcon={<VisibilityIcon/>}
-                onClick={(event: any) => {
-                  console.log(event, cellValues);
-                }}
-              >
-                Ver
-              </Button>
-            </Grid>
-
-            <Grid item>
-              <Button
-                variant="contained"
-                color="primary"
-                size='small'
-                startIcon={<EditIcon fontSize='small' />}
-                onClick={() => {
-                  navigate(`/usuarios/edit/${cellValues.id}`);
-                }}
-              >
-                Editar
-              </Button>
-            </Grid>
-          </Grid>
+          <Box textAlign={'center'} width={'100%'}>
+            <Button
+              variant="contained"
+              color="primary"
+              size='small'
+              startIcon={<EditIcon fontSize='small' />}
+              onClick={() => {
+                navigate(`/usuarios/edit/${cellValues.id}`);
+              }}
+            >
+              Editar
+            </Button>
+          </Box>
         );
       }
     }
