@@ -1,7 +1,6 @@
 import clienteAxios from '../../config/axios';
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import { Libro } from '../../interfaces/index';
-import { format } from 'date-fns';
 const url = process.env.REACT_APP_API;
 
 export const getLibros  = createAsyncThunk(
@@ -50,9 +49,6 @@ export const getLibroForEdit  = createAsyncThunk(
 export const addLibro  = createAsyncThunk(
   'libros/addLibro',
   async (libro: Libro, { rejectWithValue }) => {
-    // if (libro.fecha_nacimiento) {
-    //   libro.fecha_nacimiento = format(new Date (libro.fecha_nacimiento), "yyyy-MM-dd" )
-    // }
     try {
       const response = await clienteAxios.post( `${url}libros`, libro);
       const respuesta = response.data;
@@ -67,9 +63,6 @@ export const addLibro  = createAsyncThunk(
 export const updateLibro  = createAsyncThunk(
   'libros/updateLibro',
   async (libro: Libro, { rejectWithValue }) => {
-    // if (libro.fecha_nacimiento) {
-    //   libro.fecha_nacimiento = format(new Date (libro.fecha_nacimiento), "yyyy-MM-dd" )
-    // }
     try {
       const {id} = libro;
       const response = await clienteAxios.put( `${url}libros/${id}`, libro);

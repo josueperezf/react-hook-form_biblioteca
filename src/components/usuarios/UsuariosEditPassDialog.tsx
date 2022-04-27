@@ -31,7 +31,7 @@ export const UsuariosEditPassDialog = ({onClose, open}: Props) => {
   const formMethods = useForm<CambioPassword>({ mode: 'all', defaultValues, resolver: yupResolver(validationSchema) })
   const { handleSubmit, setError, reset, formState: { isValid, isDirty } } = formMethods;
   const {usuario} = useAppSelector(state => state.auth);
-  const {cargando, error} = useAppSelector(state => state.usuarios);
+  const {cargando} = useAppSelector(state => state.usuarios);
 
   useEffect(() => {
     if (open && usuario && usuario.id) {
