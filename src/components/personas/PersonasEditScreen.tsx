@@ -68,7 +68,8 @@ export const PersonasEditScreen = () => {
   useEffect(() => {
     const resetValues = async () => {
       if (persona && Object.keys(persona).length > 0) {
-        reset(persona);
+        const {dni, nombre, direccion, telefono, fecha_nacimiento} = persona;
+        reset({id, dni, nombre, direccion, telefono, fecha_nacimiento});
         // la siguiente es para llamar a todas las validaciones, nota esto llama a las validaciones pero no hace un touched en los inputs
         trigger();
         setValue('dni', formatRut(persona.dni))

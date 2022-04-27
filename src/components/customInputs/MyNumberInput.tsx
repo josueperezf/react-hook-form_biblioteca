@@ -59,7 +59,6 @@ export const MyNumberInput = ({ label, max, min, name, variant, onChange: onChan
             }}
             onInput={(e: any) => {
               (onInput) && onInput(e);
-              console.log('vambio el value');
               
             }}
           />

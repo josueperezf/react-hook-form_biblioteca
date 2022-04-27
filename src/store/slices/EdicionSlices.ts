@@ -106,7 +106,7 @@ const EdicionSlice = createSlice({
       })
       .addCase(updateEdicion.fulfilled, (state, action) => {
         state.cargando = false;
-        console.log(action);
+        // console.log(action);
       })
       .addCase(updateEdicion.rejected, (state, action) => {
         state.cargando = false;

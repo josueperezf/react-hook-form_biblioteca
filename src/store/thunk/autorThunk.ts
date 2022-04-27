@@ -21,8 +21,7 @@ export const getAutor  = createAsyncThunk(
   async (id: number) => {
     const response = await clienteAxios.get( `${url}autores/${id}`);
     const respuesta = response.data;
-    console.log(respuesta);
-    
+    // console.log(respuesta);
     return respuesta;
   }
 );

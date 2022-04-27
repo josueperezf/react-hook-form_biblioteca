@@ -33,7 +33,7 @@ export const getEdicion  = createAsyncThunk(
   async (id: number) => {
     const response = await clienteAxios.get( `${url}ediciones/${id}`);
     const respuesta = response.data;
-    console.log(respuesta);
+    // console.log(respuesta);
     
     return respuesta;
   }

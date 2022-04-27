@@ -21,7 +21,7 @@ export const getLibro  = createAsyncThunk(
   async (id: number) => {
     const response = await clienteAxios.get( `${url}libros/${id}`);
     const respuesta = response.data;
-    console.log(respuesta);
+    // console.log(respuesta);
     
     return respuesta;
   }
@@ -42,8 +42,7 @@ export const getLibroForEdit  = createAsyncThunk(
   async (id: number) => {
     const response = await clienteAxios.get( `${url}libros/edit/${id}`);
     const respuesta = response.data;
-    console.log(respuesta);
-    
+    // console.log(respuesta);
     return respuesta;
   }
 );

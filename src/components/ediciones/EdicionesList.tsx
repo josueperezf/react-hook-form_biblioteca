@@ -3,7 +3,7 @@ import { GridToolbarContainer, GridToolbarColumnsButton, GridToolbarFilterButton
 import { useAppSelector } from '../../hooks/useRedux';
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Grid, Button } from '@mui/material';
+import { Grid, Button, Chip, Box } from '@mui/material';
 import VisibilityIcon from '@mui/icons-material/Visibility';
 import EditIcon from '@mui/icons-material/Edit';
 import { format } from 'date-fns';
@@ -38,25 +38,10 @@ export const EdicionesList = ({ediciones}: Props) => {
     // { field: 'libro', headerName: 'Libro', minWidth: 200, editable: false, valueFormatter: (data : any) => data.value.titulo },
     { field: 'nombre', headerName: 'Nombre', minWidth: 250, editable: false, flex: 1 },
     { field: 'fecha', headerName: 'Fecha', width: 100,  valueFormatter: (data : any) =>  format(new Date (data.value), "dd-MM-yyyy" ) },
-    { field: 'print', headerName: 'Acciones', disableExport: true, width: 200, sortable: false, filterable: false, disableColumnMenu: true,
+    { field: 'print', headerName: 'Acciones', disableExport: true, width: 120, sortable: false, filterable: false, disableColumnMenu: true,
     renderCell: (cellValues) => {
       return (
-        <Grid container spacing={2}>
-          <Grid item>
-            <Button
-              variant="contained"
-              color="primary"
-              size='small'
-              startIcon={<VisibilityIcon/>}
-              onClick={(event: any) => {
-                console.log(event, cellValues);
-              }}
-            >
-              Ver
-            </Button>
-          </Grid>
-
-          <Grid item>
+        <Box textAlign={'center'} width={'100%'}>
             <Button
               variant="contained"
               color="primary"
@@ -68,8 +53,7 @@ export const EdicionesList = ({ediciones}: Props) => {
             >
               Editar
             </Button>
-          </Grid>
-        </Grid>
+        </Box>
       );
     }
     }
@@ -81,7 +65,9 @@ export const EdicionesList = ({ediciones}: Props) => {
    * esto ocurre solo cuando es llamado desde edicionesScreen
    */
   if (ediciones.length > 0 && ediciones[0].libro) {
-    const column = { field: 'libro', headerName: 'Libro', minWidth: 200, editable: false, valueFormatter: (data : any) => data.value.titulo };
+    const column = { field: 'libro', headerName: 'Libro', minWidth: 200, editable: false,
+      renderCell: (data : any) => <Chip  label={ data.value.titulo} color="info" onClick={()=>navigate(`/libros/show/${data.value.id}`)} /> };
+    // data.value.titulo
     columns.splice(1, 0, column);
   }
 

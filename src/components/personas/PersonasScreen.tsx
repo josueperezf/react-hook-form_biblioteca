@@ -3,14 +3,14 @@ import Box from '@mui/material/Box';
 import { Typography, Grid, Button } from '@mui/material';
 import { getPersonas } from '../../store/thunk/personaThunk';
 import { useAppDispatch, useAppSelector } from '../../hooks/useRedux';
-import { PeronasList } from './PeronasList';
+import { PersonasList } from './PersonasList';
 import AddCircleIcon from '@mui/icons-material/AddCircle';
 import { useNavigate } from "react-router-dom";
 
 const PersonasScreen = () => {
     const navigate = useNavigate();
     const dispatch = useAppDispatch();
-    const {cargando} = useAppSelector(state => state.personas);
+    const {cargando, personas} = useAppSelector(state => state.personas);
 
     useEffect(() => {
         dispatch(getPersonas());
@@ -32,7 +32,7 @@ const PersonasScreen = () => {
               </Button>
             </Grid>
           </Grid>
-          {cargando ? <h3>...Cargando</h3> : <PeronasList/>}
+          {cargando ? <h3>...Cargando</h3> : (!personas || personas.length > 0) ? <PersonasList  /> : <p>Aun no hay registros para mostrar</p>}
         </Box>
     )
 }

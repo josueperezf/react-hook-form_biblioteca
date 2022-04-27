@@ -87,7 +87,7 @@ const AutorSlice = createSlice({
       })
       .addCase(updateAutor.fulfilled, (state, action) => {
         state.cargando = false;
-        console.log(action);
+        // console.log(action);
       })
       .addCase(updateAutor.rejected, (state, action) => {
         state.cargando = false;

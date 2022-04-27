@@ -24,8 +24,7 @@ export const getPersona  = createAsyncThunk(
   async (id: number) => {
     const response = await clienteAxios.get( `${url}personas/${id}`);
     const respuesta = response.data;
-    console.log(respuesta);
-    
+    // console.log(respuesta);
     return respuesta;
   }
 );

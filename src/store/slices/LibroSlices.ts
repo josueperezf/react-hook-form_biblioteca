@@ -73,7 +73,7 @@ const LibroSlice = createSlice({
       })
       .addCase(getLibroPorAutor.fulfilled, (state, action) => {
         state.cargando = false;
-        console.log(action.payload);
+        // console.log(action.payload);
         state.libros = action.payload.libros;
       })
       .addCase(getLibroPorAutor.rejected, (state, action) => {
@@ -128,7 +128,7 @@ const LibroSlice = createSlice({
       })
       .addCase(updateLibro.fulfilled, (state, action) => {
         state.cargandoEnDialog = false;
-        console.log(action);
+        // console.log(action);
       })
       .addCase(updateLibro.rejected, (state, action) => {
         state.cargandoEnDialog = false;

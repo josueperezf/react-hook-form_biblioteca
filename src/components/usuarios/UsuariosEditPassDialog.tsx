@@ -38,8 +38,6 @@ export const UsuariosEditPassDialog = ({onClose, open}: Props) => {
       const data = {...defaultValues, id: usuario.id, };
       reset(data)
     }
-    console.log('abrio');
-    
   }, [open])
   
   const dispatch = useAppDispatch();

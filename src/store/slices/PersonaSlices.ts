@@ -124,7 +124,7 @@ const PersonaSlice = createSlice({
       })
       .addCase(updatePersona.fulfilled, (state, action) => {
         state.cargando = false;
-        console.log(action);
+        // console.log(action);
       })
       .addCase(updatePersona.rejected, (state, action) => {
         state.cargando = false;
