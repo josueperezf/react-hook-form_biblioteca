@@ -82,6 +82,7 @@ export interface Edicion  {
     numero_paginas: number,
     tipo?: number | null,
     estatus?: number,
+    idioma?: Idioma,
     [x: string]: any
 }
 export interface TipoUsuario {

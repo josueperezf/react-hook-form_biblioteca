@@ -19,6 +19,7 @@ import { CopiasEditScreen } from '../components/copias/CopiasEditScreen';
 import { UsuariosScreen } from '../components/usuarios/UsuariosScreen';
 import { UsuariosAddScreen } from '../components/usuarios/UsuariosAddScreen';
 import { UsuariosEditScreen } from '../components/usuarios/UsuariosEditScreen';
+import { CopiasShowScreen } from '../components/copias/CopiasShowScreen';
 
 export const PrivateRouter = () => {
   return (
@@ -54,6 +55,7 @@ export const PrivateRouter = () => {
           <Route index element={<Accesos roles={['admin']} component={CopiasScreen }/>}/>
           <Route path="add" element={<Accesos roles={['admin']} component={CopiasAddScreen }/>}/>
           <Route path="edit/:id" element={<Accesos roles={['admin']} component={CopiasEditScreen }/>}/>
+          <Route path="show/:id" element={<Accesos roles={['admin']} component={CopiasShowScreen }/>}/>
         </Route>
 
         <Route path='usuarios'>

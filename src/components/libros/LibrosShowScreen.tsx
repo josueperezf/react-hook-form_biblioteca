@@ -29,7 +29,7 @@ export const LibrosShowScreen = () => {
       }
     }
     cargarData();
-  }, [dispatch]);  
+  }, [dispatch]);
 
   return (
     <>

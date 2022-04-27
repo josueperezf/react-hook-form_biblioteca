@@ -1,7 +1,5 @@
-import React from 'react'
 import { Copia } from '../../interfaces/index';
 import { GridToolbarContainer, GridToolbarColumnsButton, GridToolbarFilterButton, GridToolbarExport, GridColDef, DataGrid } from '@mui/x-data-grid';
-import { useAppSelector } from '../../hooks/useRedux';
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Grid, Button } from '@mui/material';
@@ -40,13 +38,9 @@ export const CopiasList = ({copias}: Props) => {
         return (
           <Grid container spacing={2}>
             <Grid item>
-              <Button
-                variant="contained"
-                color="primary"
-                size='small'
-                startIcon={<VisibilityIcon/>}
+              <Button variant="contained" color="primary" size='small' startIcon={<VisibilityIcon/>}
                 onClick={(event: any) => {
-                  console.log(event, cellValues);
+                  navigate(`/copias/show/${cellValues.id}`);
                 }}
               >
                 Ver
@@ -54,11 +48,7 @@ export const CopiasList = ({copias}: Props) => {
             </Grid>
 
             <Grid item>
-              <Button
-                variant="contained"
-                color="primary"
-                size='small'
-                startIcon={<EditIcon fontSize='small' />}
+              <Button variant="contained" color="primary" size='small' startIcon={<EditIcon fontSize='small' />}
                 onClick={() => {
                   navigate(`/copias/edit/${cellValues.id}`);
                 }}
