@@ -1,7 +1,7 @@
-import { Dialog, DialogTitle, DialogContent, DialogActions, Box, Grid, Button, CircularProgress } from '@mui/material';
+import { Dialog, DialogTitle, DialogContent, DialogActions, Box, Grid, Button } from '@mui/material';
 import * as Yup from 'yup';
 import { yupResolver } from '@hookform/resolvers/yup';
-import { CambioPassword, Error400, Usuario } from '../../interfaces/index';
+import { CambioPassword, Error400 } from '../../interfaces/index';
 import { useAppSelector, useAppDispatch } from '../../hooks/useRedux';
 import { useForm, FormProvider } from 'react-hook-form';
 import { useSnackbar } from 'notistack';
@@ -59,16 +59,11 @@ export const UsuariosEditPassDialog = ({onClose, open}: Props) => {
       enqueueSnackbar('Operacion Exitosa', {variant: 'success', anchorOrigin: { horizontal: 'center', vertical: 'top'}});
       llamarCerrarSesion();
     } catch (error: any) {
-      console.log('entro a error');
-      
       enqueueSnackbar('ha ocurrido un problema', { variant: 'error', anchorOrigin: { horizontal: 'center', vertical: 'top'}});
       if (error && error.errors) {
         const errors: [] = error.errors || [];
         errors.forEach(({msg, param }: Error400 ) => {
-          setError( (param as keyof CambioPassword), {
-            type: "manual",
-            message: msg,
-          });
+          setError( (param as keyof CambioPassword), {type: "manual", message: msg});
         })
       }
     }

@@ -1,5 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { addUsuario, getUsuarios, getUsuario, updateUsuarioPass } from '../thunk/usuarioThunk';
+import { addUsuario, getUsuarios, getUsuario, updateUsuarioPass, updateUsuario } from '../thunk/usuarioThunk';
 import { Usuario } from '../../interfaces/index';
 
 interface UsuarioState {
@@ -82,16 +82,16 @@ const UsuarioSlice = createSlice({
 
       // updateUsuarioPass
     builder
-      .addCase(updateUsuarioPass.pending, (state) => {
+      .addCase(
+        updateUsuarioPass.pending || updateUsuario.pending
+        , (state) => {
         state.cargando = true;
       })
-      .addCase(updateUsuarioPass.fulfilled, (state, action) => {
+      .addCase(updateUsuarioPass.fulfilled || updateUsuario.fulfilled
+        , (state, action) => {
         state.cargando = false;
-        console.log(action);
       })
-      .addCase(updateUsuarioPass.rejected, (state, action) => {
-        console.log(action);
-        
+      .addCase(updateUsuarioPass.rejected || updateUsuario.rejected , (state, action) => {
         state.cargando = false;
         if (action.payload) {
           state.error = (action.payload as any) || null;

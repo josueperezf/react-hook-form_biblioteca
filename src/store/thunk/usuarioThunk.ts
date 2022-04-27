@@ -40,6 +40,19 @@ export const addUsuario  = createAsyncThunk(
   }
 );
 
+export const updateUsuario  = createAsyncThunk(
+  'usuarios/updateUsuario',
+  async (usuario: Usuario, { rejectWithValue }) => {
+    try {
+      const {id} = usuario;
+      const response = await clienteAxios.put( `${url}usuarios/${id}`, usuario);
+      const respuesta = response.data;
+      return respuesta;
+    } catch (error: any) {
+        return rejectWithValue(error);
+    }
+  }
+);
 export const updateUsuarioPass  = createAsyncThunk(
   'usuarios/updateUsuarioPass',
   async (cambioPassword: CambioPassword, { rejectWithValue }) => {

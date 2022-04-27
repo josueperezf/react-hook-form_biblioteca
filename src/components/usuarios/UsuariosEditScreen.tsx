@@ -3,98 +3,98 @@ import { FormProvider, useForm } from "react-hook-form";
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as Yup from 'yup';
 import { useAppDispatch, useAppSelector } from '../../hooks/useRedux';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import { useSnackbar } from 'notistack';
-import { Usuario, Error400, Persona } from '../../interfaces/index';
-import { addUsuario } from '../../store/thunk/usuarioThunk';
+import { Usuario, Error400 } from '../../interfaces/index';
+import { getUsuario, updateUsuario } from '../../store/thunk/usuarioThunk';
 import { MyTextInput } from '../customInputs/MyTextInput';
-import { useState, useEffect } from 'react';
-import { BuscarPersonaPorDNI } from '../personas/BuscarPersonaPorDNI';
+import { useEffect } from 'react';
 
 const defaultValues: Usuario = {
   login: '',
-  password: '',
-  persona_id: 0
+  persona_id: 0,
+  tipo_usuario_id: 0,
 }
 
 const validationSchema =
   Yup.object({
     login: Yup.string().email('debe ser un correo valido').trim().min(3, 'debe contener al menos 3 caracteres').max(50, 'Debe tener 50 caracteres o menos').required('Requerido'),
-    password: Yup.string().trim().min(6, 'debe contener al menos 6 caracteres').max(10, 'Debe tener 10 caracteres o menos').required('Requerido'),
-    persona_id: Yup.string().notOneOf(['0']).required('Requerido'),
 });
 
-export const UsuariosAddScreen = () => {
+export const UsuariosEditScreen = () => {
   const formMethods = useForm<Usuario>({ mode: 'all', defaultValues, resolver: yupResolver(validationSchema) })
-  const { handleSubmit, setValue, reset, setError, formState: { isValid } } = formMethods;
-  const [persona, setPersona] = useState<Persona | null>(null);
+  const { handleSubmit, setValue, reset, trigger, setError, formState: { isValid } } = formMethods;
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
   const { enqueueSnackbar } = useSnackbar();
-  const {token, cargando} = useAppSelector(state => state.auth);
+  const {usuario, cargando} = useAppSelector(state => state.usuarios);
+  const params = useParams();
+  const id = parseInt(params.id || '') ;
 
   useEffect(() => {
-    setPersona(null);
-  }, [])
+    const cargarData = async () => {
+      if (id && (typeof id != "string")) {
+        try {
+          await dispatch(getUsuario(id)).unwrap();
+        } catch (error) {
+          navigate('/usuarios');
+        }
+      } else {
+        navigate('/usuarios');
+      }
+    }
+    cargarData();
+  }, [id]);
+
+  useEffect(() => {
+    const resetValues = async () => {
+      if (usuario && Object.keys(usuario).length > 0) {
+        const { login, tipo_usuario_id, persona_id} = usuario;
+        reset({id, login, tipo_usuario_id, persona_id});
+        // la siguiente es para llamar a todas las validaciones, nota esto llama a las validaciones pero no hace un touched en los inputs
+        trigger();
+      }
+    }
+    resetValues();
+  }, [usuario])
   
 
   const onSubmit = async (data: any) => {
     if (!isValid) return;
     try {
-      await dispatch(addUsuario(data)).unwrap();
-      enqueueSnackbar('Bienvenido al sistema', {variant: 'success', anchorOrigin: { horizontal: 'center', vertical: 'top'}});
-      if (token) {
-        navigate('/usuarios');
-      }
+      await dispatch(updateUsuario(data)).unwrap();
+      enqueueSnackbar('Operacion exitosa', {variant: 'success', anchorOrigin: { horizontal: 'center', vertical: 'top'}});
+      navigate('/usuarios');
     } catch (error: any) {
       enqueueSnackbar('Ha ocurrido un problema', { variant: 'error', anchorOrigin: { horizontal: 'center', vertical: 'top'}});
       if (error && error.errors) {
         const errors: [] = error.errors || [];
         errors.forEach(({msg, param }: Error400) => {
-          console.log(param);
-          
-          setError( (param as keyof Usuario), {
-            type: "manual",
-            message: msg,
-          });
+          setError( (param as keyof Usuario), {type: "manual", message: msg});
         })
       }
     }
   }
-  const fn = (persona: Persona | null) => {
-    setPersona(persona);
-    (persona && persona.id)
-      ? setValue('persona_id', persona.id)
-      : reset(defaultValues);
-  }
 
   return (
     <Box >
-      <Typography align='center' variant='h5' mb={2} >Nuevo Usuario</Typography>
+      <Typography align='center' variant='h5' mb={2} >Editar login de Usuario</Typography>
       <Box mt={4}>
-        <Grid container spacing={1} justifyContent="center" mb={3}>
-          <Grid item md={6} xs={12}   >
-            <BuscarPersonaPorDNI fn={fn} tipo='sin-cuenta-usuario' />
-          </Grid>
-        </Grid>
         <FormProvider {...formMethods} >
           <form onSubmit={handleSubmit(onSubmit)}>
             {
-              (persona) &&
+              (usuario) &&
               <>
                 <Grid container spacing={3}>
                   <Grid item md={4} xs={12} >
                       <Box mb={2}>
                         <Alert severity="success" variant="outlined" style={{height: '54px'}}>
-                          <b>Persona: </b> {persona.nombre}
+                          <b>Persona: </b> {usuario.persona?.nombre}
                         </Alert>
                       </Box>
                   </Grid>
                   <Grid item md={4} xs={12} >
-                    <MyTextInput label={'Login o Correo'} name={'login'} placeholder='Login o Correo' maxLength={30} disabled={persona === null} />
-                  </Grid>
-                  <Grid item md={4} xs={12} >
-                    <MyTextInput label={'Password o Clave'} name={'password'} type='password' placeholder='Password o Clave' maxLength={10} disabled={persona === null}/>
+                    <MyTextInput label={'Login o Correo'} name={'login'} placeholder='Login o Correo' maxLength={30} />
                   </Grid>
                 </Grid>
                 <Box mt={3} textAlign='center'>

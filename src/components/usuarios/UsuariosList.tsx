@@ -52,7 +52,7 @@ export const UsuariosList = ({usuarios}: Props) => {
                 size='small'
                 startIcon={<EditIcon fontSize='small' />}
                 onClick={() => {
-                  navigate(`/personas/edit/${cellValues.id}`);
+                  navigate(`/usuarios/edit/${cellValues.id}`);
                 }}
               >
                 Editar
