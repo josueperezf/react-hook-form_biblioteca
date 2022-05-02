@@ -17,36 +17,6 @@ clienteAxios.interceptors.request.use(function (config: AxiosRequestConfig) {
     return config;
 });
 
-clienteAxios.interceptors.response.use(response => response,
-    error => {
-        // alert('hay un error');
-        if (error.response) {
-            // The request was made and the server responded with a status code
-            // that falls out of the range of 2xx
-            console.log(error.response.data);
-            console.log(error.response.status);
-            console.log(error.response.headers);
-            
-          } else if (error.request) {
-            // The request was made but no response was received
-            // `error.request` is an instance of XMLHttpRequest in the browser and an instance of
-            // http.ClientRequest in node.js
-            console.log(error.request);
-            console.log(error.request.status);
-            if (error.request.status === 0) {
-                alert('servidor no encontrado');
-            }
-
-          } else {
-            // Algo sucedió al configurar la solicitud que provocó un error
-            console.log('Error', error.message);
-          }
-        console.log(error.config);
-        if (error.response.status === 400) {
-            return Promise.reject(error.response.data);
-        }
-            
-    }
-);
+// el interceptor de response esta en un hook que cree llamado useInterceptorAxios, alli manejo los errores de autenticacion y demas
 
 export default clienteAxios;

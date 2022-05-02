@@ -9,7 +9,6 @@ import { LibrosList } from './LibrosList';
 import { LibrosAddDialog } from './LibrosAddDialog';
 
 export const LibrosScreen = () => {
-    const navigate = useNavigate();
     const dispatch = useAppDispatch();
     const {cargando} = useAppSelector(state => state.libros);
 

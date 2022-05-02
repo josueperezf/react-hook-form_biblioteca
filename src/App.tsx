@@ -16,6 +16,7 @@ function App() {
     <ThemeProvider theme={theme}>
       <LocalizationProvider dateAdapter={AdapterDateFns} locale={es} >
         <Provider store={store} >
+          {/* maxSnack es por que ese el numero maximo de toast que pueden estar de manera simultanea en la pantalla */}
           <SnackbarProvider maxSnack={1}>
             <AppRouter />
           </SnackbarProvider>

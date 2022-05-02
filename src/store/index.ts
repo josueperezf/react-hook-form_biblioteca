@@ -5,6 +5,7 @@ import CopiaSlices from './slices/CopiaSlices';
 import EdicionSlice from './slices/EdicionSlices';
 import IdiomaSlice from './slices/IdiomaSlices';
 import LibroSlice from './slices/LibroSlices';
+import MensajeSlice from './slices/MensajeSlices';
 import PaisSlice from './slices/PaisSlices';
 import PersonaSlice from './slices/PersonaSlices';
 import UsuarioSlice from './slices/UsuarioSlices';
@@ -17,6 +18,7 @@ export const store = configureStore({
     ediciones: EdicionSlice,
     idiomas: IdiomaSlice,
     libros: LibroSlice,
+    mensaje: MensajeSlice,
     paises: PaisSlice,
     personas: PersonaSlice,
     usuarios: UsuarioSlice,

@@ -20,48 +20,50 @@ import { UsuariosScreen } from '../components/usuarios/UsuariosScreen';
 import { UsuariosAddScreen } from '../components/usuarios/UsuariosAddScreen';
 import { UsuariosEditScreen } from '../components/usuarios/UsuariosEditScreen';
 import { CopiasShowScreen } from '../components/copias/CopiasShowScreen';
+import { TIPO_USUARIO } from '../enums/index';
 
 export const PrivateRouter = () => {
+  
   return (
     <DashboardTemplate>
       <Routes>
 
         <Route path='personas'>
-          <Route index  element={<Accesos roles={['admin']} component={PersonasScreen }/>}/>
-          <Route path="add" element={<Accesos roles={['admin']} component={PersonasAddScreen }/>}/>
-          <Route path="edit/:id" element={<Accesos roles={['admin']} component={PersonasEditScreen }/>}/>
+          <Route index  element={<Accesos roles={[TIPO_USUARIO.ADMINISTRADOR, TIPO_USUARIO.OPERADOR]} component={PersonasScreen }/>}/>
+          <Route path="add" element={<Accesos roles={[TIPO_USUARIO.ADMINISTRADOR, TIPO_USUARIO.OPERADOR]} component={PersonasAddScreen }/>}/>
+          <Route path="edit/:id" element={<Accesos roles={[TIPO_USUARIO.ADMINISTRADOR, TIPO_USUARIO.OPERADOR]} component={PersonasEditScreen }/>}/>
         </Route>
 
         <Route path='autores'>
-          <Route index  element={<Accesos roles={['admin']} component={AutoresScreen }/>}/>
-          <Route path="add" element={<Accesos roles={['admin']} component={AutoresAddScreen }/>}/>
-          <Route path="edit/:id" element={<Accesos roles={['admin']} component={AutoresEditScreen }/>}/>
-          <Route path="show/:id" element={<Accesos roles={['admin']} component={AutoresShowScreen }/>}/>
+          <Route index  element={<Accesos roles={[TIPO_USUARIO.ADMINISTRADOR, TIPO_USUARIO.OPERADOR]} component={AutoresScreen }/>}/>
+          <Route path="add" element={<Accesos roles={[TIPO_USUARIO.ADMINISTRADOR, TIPO_USUARIO.OPERADOR]} component={AutoresAddScreen }/>}/>
+          <Route path="edit/:id" element={<Accesos roles={[TIPO_USUARIO.ADMINISTRADOR, TIPO_USUARIO.OPERADOR]} component={AutoresEditScreen }/>}/>
+          <Route path="show/:id" element={<Accesos roles={[TIPO_USUARIO.ADMINISTRADOR, TIPO_USUARIO.OPERADOR]} component={AutoresShowScreen }/>}/>
         </Route>
 
         {/* el crud de libros se hace mediante ventanas dialog */}
         <Route path='libros'>
-          <Route index  element={<Accesos roles={['admin']} component={LibrosScreen }/>}/>
-          <Route path="show/:id" element={<Accesos roles={['admin']} component={LibrosShowScreen }/>}/>
+          <Route index  element={<Accesos roles={[TIPO_USUARIO.ADMINISTRADOR, TIPO_USUARIO.OPERADOR]} component={LibrosScreen }/>}/>
+          <Route path="show/:id" element={<Accesos roles={[TIPO_USUARIO.ADMINISTRADOR, TIPO_USUARIO.OPERADOR]} component={LibrosShowScreen }/>}/>
         </Route>
 
         <Route path='ediciones'>
-          <Route index  element={<Accesos roles={['admin']} component={EdicionesScreen }/>}/>
-          <Route path="add" element={<Accesos roles={['admin']} component={EdicionesAddScreen }/>}/>
-          <Route path="edit/:id" element={<Accesos roles={['admin']} component={EdicionesEditScreen }/>}/>
+          <Route index  element={<Accesos roles={[TIPO_USUARIO.ADMINISTRADOR, TIPO_USUARIO.OPERADOR]} component={EdicionesScreen }/>}/>
+          <Route path="add" element={<Accesos roles={[TIPO_USUARIO.ADMINISTRADOR, TIPO_USUARIO.OPERADOR]} component={EdicionesAddScreen }/>}/>
+          <Route path="edit/:id" element={<Accesos roles={[TIPO_USUARIO.ADMINISTRADOR, TIPO_USUARIO.OPERADOR]} component={EdicionesEditScreen }/>}/>
         </Route>
 
         <Route path='copias'>
-          <Route index element={<Accesos roles={['admin']} component={CopiasScreen }/>}/>
-          <Route path="add" element={<Accesos roles={['admin']} component={CopiasAddScreen }/>}/>
-          <Route path="edit/:id" element={<Accesos roles={['admin']} component={CopiasEditScreen }/>}/>
-          <Route path="show/:id" element={<Accesos roles={['admin']} component={CopiasShowScreen }/>}/>
+          <Route index element={<Accesos roles={[TIPO_USUARIO.ADMINISTRADOR, TIPO_USUARIO.OPERADOR]} component={CopiasScreen }/>}/>
+          <Route path="add" element={<Accesos roles={[TIPO_USUARIO.ADMINISTRADOR, TIPO_USUARIO.OPERADOR]} component={CopiasAddScreen }/>}/>
+          <Route path="edit/:id" element={<Accesos roles={[TIPO_USUARIO.ADMINISTRADOR, TIPO_USUARIO.OPERADOR]} component={CopiasEditScreen }/>}/>
+          <Route path="show/:id" element={<Accesos roles={[TIPO_USUARIO.ADMINISTRADOR, TIPO_USUARIO.OPERADOR]} component={CopiasShowScreen }/>}/>
         </Route>
 
         <Route path='usuarios'>
-          <Route index element={<Accesos roles={['admin']} component={UsuariosScreen }/>}/>
-          <Route path="add" element={<Accesos roles={['admin']} component={UsuariosAddScreen }/>}/>
-          <Route path="edit/:id" element={<Accesos roles={['admin']} component={UsuariosEditScreen }/>}/>
+          <Route index element={<Accesos roles={[TIPO_USUARIO.ADMINISTRADOR]} component={UsuariosScreen }/>}/>
+          <Route path="add" element={<Accesos roles={[TIPO_USUARIO.ADMINISTRADOR]} component={UsuariosAddScreen }/>}/>
+          <Route path="edit/:id" element={<Accesos roles={[TIPO_USUARIO.ADMINISTRADOR, TIPO_USUARIO.OPERADOR]} component={UsuariosEditScreen }/>}/>
         </Route>
 
         <Route path="/*" element={<Navigate to='libros' replace /> } />

@@ -1,7 +1,9 @@
 import { createTheme } from '@mui/material/styles';
-import { green, purple, blue, red } from '@mui/material/colors';
+import { green, purple, blue, red, grey } from '@mui/material/colors';
 import { esES } from '@mui/x-data-grid';
 import { esES as coreEsES } from '@mui/material/locale';
+
+// es para activar la nueva variant a los botons, no la estoy utilizando pero la deje por que puede que me sea util para cuando revise este codigo de nuevo
 declare module '@mui/material/Button' {
     interface ButtonPropsVariantOverrides {
       dashed: true;
@@ -29,7 +31,7 @@ export const theme = createTheme({
         MuiListItemText : {
             styleOverrides: {
                 root: {
-                    color: 'red',
+                    color: '#616161',
                     marginLeft: '5px'
                 }
             }

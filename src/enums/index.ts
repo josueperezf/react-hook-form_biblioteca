@@ -1,0 +1,5 @@
+export enum TIPO_USUARIO {
+  PUBLICO = 0,
+  ADMINISTRADOR = 1,
+  OPERADOR = 2,
+}

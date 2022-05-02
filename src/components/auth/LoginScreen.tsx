@@ -57,7 +57,7 @@ const LoginScreen = () => {
       <FormProvider {...formMethods} >
         <form onSubmit={handleSubmit(onSubmit)}>
           <Card sx={{ minWidth: 350, boxShadow: 1 }}>
-            <CardHeader sx={{ backgroundColor: 'primary.main', color: 'white', textAlign: 'center' }}title="Iniciar Sesion"/>
+            <CardHeader sx={{ backgroundColor: 'primary.main', color: 'white', textAlign: 'center' }} title="Iniciar Sesion"/>
             <Box sx={{ width: '100%' }}>
               {(cargando) && <LinearProgress color='info' />}
             </Box>

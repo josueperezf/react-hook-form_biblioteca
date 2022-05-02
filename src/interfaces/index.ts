@@ -53,6 +53,13 @@ export interface Copia {
     prestamos?: [],
     serial: string,
 }
+export interface MensajeState {
+    contenido: string,
+    open: boolean,
+    tipo: 'error' | 'success' | 'info',
+    titulo: string,
+    onClose?: (() => void) | null;
+}
 export interface Pais {
     id: number,
     nombre: string,
