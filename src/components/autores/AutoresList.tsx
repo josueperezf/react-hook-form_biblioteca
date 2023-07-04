@@ -1,4 +1,3 @@
-import React from 'react'
 import { GridToolbarContainer, GridToolbarColumnsButton, GridToolbarFilterButton, GridToolbarExport, GridColDef, DataGrid } from '@mui/x-data-grid';
 import { useAppSelector } from '../../hooks/useRedux';
 import { useState } from 'react';

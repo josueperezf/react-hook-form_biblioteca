@@ -22,7 +22,7 @@ const validationSchema =
 
 const LoginScreen = () => {
   const formMethods = useForm<Auth>({ mode: 'all', defaultValues, resolver: yupResolver(validationSchema) })
-  const { handleSubmit, setValue, setError, formState: { isValid, isDirty } } = formMethods;
+  const { handleSubmit, setError, formState: { isValid } } = formMethods;
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
   const { enqueueSnackbar } = useSnackbar();

@@ -1,13 +1,13 @@
-import React, { useCallback } from 'react'
 import { GridToolbarContainer, GridToolbarColumnsButton, GridToolbarFilterButton, GridToolbarExport, GridColDef, DataGrid } from '@mui/x-data-grid';
 import { useNavigate } from 'react-router-dom';
 import { useState } from 'react';
 import { useAppSelector, useAppDispatch } from '../../hooks/useRedux';
-import { Grid, Button, Box } from '@mui/material';
+import { Grid, Button } from '@mui/material';
 import VisibilityIcon from '@mui/icons-material/Visibility';
 import EditIcon from '@mui/icons-material/Edit';
 import { getLibros } from '../../store/thunk/libroThunk';
 import { LibrosEditDialog } from './LibrosEditDialog';
+
 function customToolbar() {
   return (
     <GridToolbarContainer>
@@ -38,6 +38,7 @@ export const LibrosList = () => {
   }
   const handleClose = (value: boolean) => {
     setOpen(false);
+    setId(0);
     value && dispatch(getLibros());
   };
 
@@ -84,11 +85,11 @@ export const LibrosList = () => {
   return (
     <>
       <div style={{ width: '100%' }}>
-        <LibrosEditDialog
+        { (libros && libros.length > 0 && id !== 0) && <LibrosEditDialog
           id={id}
           open={open}
           onClose={handleClose}
-        />
+        /> }
         {/* al DataGrid se le coloco una clase css '.MuiDataGrid-root .MuiDataGrid-cell' en el index.css para que las celdas saltaran de linea si no cabe el texto */}
         <DataGrid
           autoHeight

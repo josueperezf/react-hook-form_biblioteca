@@ -66,10 +66,10 @@ export const AutoresShowScreen = () => {
 
   useEffect(() => {
     if (paises.length > 0 && autor && autor.pais_id && pais === '') {
-      const paisEncontrado: Pais[] = paises.filter(({id}: Pais) => id == autor.pais_id) ;
+      const paisEncontrado: Pais[] = paises.filter(({id}: Pais) => id === autor.pais_id) ;
       (paisEncontrado.length > 0 ) && setPais(paisEncontrado[0].nombre);
     }
-  }, [paises, autor])
+  }, [paises, pais, autor])
   
 
   return (

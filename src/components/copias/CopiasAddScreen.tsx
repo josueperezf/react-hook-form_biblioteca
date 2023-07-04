@@ -27,7 +27,7 @@ const validationSchema =
 
 export const CopiasAddScreen = () => {
   const formMethods = useForm<Copia>({ mode: 'all', defaultValues, resolver: yupResolver(validationSchema) })
-  const { handleSubmit, setValue, setError, formState: { isValid, isDirty } } = formMethods;
+  const { handleSubmit, setError, formState: { isValid, isDirty } } = formMethods;
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
   const { enqueueSnackbar } = useSnackbar();

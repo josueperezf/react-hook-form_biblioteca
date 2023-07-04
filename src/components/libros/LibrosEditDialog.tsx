@@ -42,7 +42,7 @@ export const LibrosEditDialog = memo((props: LibrosEditDialogProps) => {
       (autores.length === 0) && dispatch(getAutores());
       dispatch(getLibroForEdit(id));
     }
-  }, [open]);
+  }, [open, autores.length, dispatch, id]);
 
   useEffect(() => {
     if (autores && autores.length > 0) {
@@ -59,7 +59,7 @@ export const LibrosEditDialog = memo((props: LibrosEditDialogProps) => {
       reset(data);
       // trigger();
     }
-  }, [libro])
+  }, [libro, reset])
 
   const onSubmit = async (data: any) => {        
     try {
